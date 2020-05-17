@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,30 +13,33 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.hardware.GeomagneticField;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+
 public class WatchService extends Service {
-	
+
 	LocationManager locationManager;
-    LocationListener locationListener;
-    
-    PendingIntent contentIntent;
-    
-    Location geocacheLocation = new Location("");
-    
-    float gc_difficulty, gc_terrain;
+	LocationListener locationListener;
+
+	PendingIntent contentIntent;
+
+	Location geocacheLocation = new Location("");
+
+	float gc_difficulty, gc_terrain;
 	String gc_name, gc_code, gc_size;
-	
+
 	float declination = 1000;
-	
+
 	private static final int DISTANCE_KEY = 0;
 	private static final int BEARING_INDEX_KEY = 1;
 	private static final int EXTRAS_KEY = 2;
@@ -45,71 +49,76 @@ public class WatchService extends Service {
 	private static final int GC_SIZE_KEY = 6;
 	private static final int AZIMUTH_KEY = 7;
 	private static final int DECLINATION_KEY = 8;
-	
-    private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
-    
-    @Override
-    public IBinder onBind(Intent arg0) {
-          return null;
-    }
-    
-    @Override
-    public void onCreate() {
-    	super.onCreate();
 
-    	// Listen when notification is clicked to close the service
-        IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
+	private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
+
+	@Override
+	public IBinder onBind(Intent arg0) {
+		return null;
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+
+		// Listen when notification is clicked to close the service
+		IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
 		registerReceiver(mReceiver, filter);
-    	
-    	//set to run in foreground, so it's not killed by android
-		showNotification();	
-	
-		
-					
+
+		//set to run in foreground, so it's not killed by android
+		showNotification();
+
+
 		//register for GPS location updates
 		registerLocationUpdates();
-		
-        startWatchApp();
-	
-    }
-    
-    public void stopApp(){
-    	this.stopSelf();
-    }
-    
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
-	    @Override
-	    public void onReceive(Context context, Intent intent) {
-	    	
-	        if(intent.getAction().equals("android.intent.CLOSE_ACTIVITY")){
-	    		stopApp();
-	    	}
-	    	
-	    }
+		startWatchApp();
+
+	}
+
+	public void stopApp() {
+		this.stopSelf();
+	}
+
+	BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+
+			if (intent.getAction().equals("android.intent.CLOSE_ACTIVITY")) {
+				stopApp();
+			}
+
+		}
 
 	};
-    
-    void registerLocationUpdates(){
-    	// Acquire a reference to the system Location Manager
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-        // Define a listener that 'responds' to location updates
-        locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-            	locationUpdate(location);
-            }
+	void registerLocationUpdates() {
+		// Acquire a reference to the system Location Manager
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
+		// Define a listener that 'responds' to location updates
+		locationListener = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				locationUpdate(location);
+			}
 
-            public void onProviderEnabled(String provider) {}
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+			}
 
-            public void onProviderDisabled(String provider) {}
-          };
+			public void onProviderEnabled(String provider) {
+			}
 
-        // Register the listener with the Location Manager to receive location updates
-        // impact on battery has not been determined
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, locationListener);
+			public void onProviderDisabled(String provider) {
+			}
+		};
+
+		// Register the listener with the Location Manager to receive location updates
+		// impact on battery has not been determined
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			return;
+		}
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, locationListener);
       	
     }
     
