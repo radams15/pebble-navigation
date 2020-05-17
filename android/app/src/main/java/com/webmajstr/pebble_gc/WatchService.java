@@ -1,5 +1,6 @@
 package com.webmajstr.pebble_gc;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import com.getpebble.android.kit.PebbleKit;
@@ -7,6 +8,8 @@ import com.getpebble.android.kit.util.PebbleDictionary;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -14,10 +17,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.GeomagneticField;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -32,6 +37,7 @@ public class WatchService extends Service {
 	LocationListener locationListener;
 
 	PendingIntent contentIntent;
+	Locale locale = Locale.ENGLISH;
 
 	Location geocacheLocation = new Location("");
 
@@ -157,15 +163,20 @@ public class WatchService extends Service {
     
     public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
-    	int bearingInt = (int)Math.round(bearing);
-    	int distanceInt = (int)Math.round(distance);
-    	int azimuthInt = (int)Math.round(azimuth);
+    	int bearingInt = Math.round(bearing);
+    	int distanceInt = Math.round(distance);
+    	int azimuthInt = Math.round(azimuth);
     	
     	// convert bearing in degrees to index of image to show. north +- 15 degrees is index 0,
     	// bearing of 30 degrees +- 15 degrees is index 1, etc..
     	int bearingIndex = ((bearingInt + 15)/30) % 12;
+
+        Log.i("Distance", String.format(locale,"%d m", distanceInt));
+        Log.i("Bearing", String.valueOf(bearingIndex));
+        Log.i("Azimuth", String.valueOf(azimuthInt));
+        Log.i("Declination", String.valueOf(Math.round(declination)));
     	    	
-    	sendToPebble(String.format("%d m", distanceInt), bearingIndex, azimuthInt, Math.round(declination) );
+    	sendToPebble(String.format(locale,"%d m", distanceInt), bearingIndex, azimuthInt, Math.round(declination) );
     	
     }
     
@@ -185,8 +196,8 @@ public class WatchService extends Service {
         
         if(hasExtras){
         	
-        	data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format("%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
-        			((gc_terrain == (int)gc_terrain) ? String.format("%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
+        	data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
+        			((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
         	
         	data.addString(GC_NAME_KEY, (gc_name.length() > 20) ? gc_name.substring(0, 20) : gc_name);
         	data.addString(GC_CODE_KEY, gc_code);
@@ -202,11 +213,7 @@ public class WatchService extends Service {
 
     	// function that makes sure that extras exists.
     	// Not really smart way, but works
-    	if(gc_name == null || gc_code == null || gc_size == null){
-    		return false;
-    	} else {
-    		return true;
-    	}
+        return gc_name != null && gc_code != null && gc_size != null;
     	
 	}
 
@@ -214,25 +221,43 @@ public class WatchService extends Service {
     	
         Intent notificationIntent = new Intent("android.intent.CLOSE_ACTIVITY");
         PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, 0);
-    	
-    	Notification notification =
-    		    new NotificationCompat.Builder(getApplicationContext())
+
+        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext())
     		    .setSmallIcon(R.drawable.ic_launcher)
     		    .setContentTitle(getText(R.string.app_name))
     		    .setContentText(getText(R.string.service_started))
-    		    .setContentIntent(intent)
-    		    .build();
-    	
-    	// actually start foreground activity
-    	startForeground(R.string.service_started, notification);
+    		    .setContentIntent(intent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String NOTIFICATION_CHANNEL_ID = "com.webmajstr.pebble_gc";
+            String channelName = "My Background Service";
+            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+            chan.setLightColor(Color.BLUE);
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert manager != null;
+            manager.createNotificationChannel(chan);
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+
+            notBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
+            notBuilder
+                    .setPriority(NotificationManager.IMPORTANCE_MIN)
+                    .setCategory(Notification.CATEGORY_SERVICE);
+        }
+
+        Notification notification = notBuilder.build();
+        startForeground(R.string.service_started, notification);
 
     } 
     
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
     	
-    	Double gc_latitude = intent.getDoubleExtra("latitude", 0.0);
-    	Double gc_longitude = intent.getDoubleExtra("longitude", 0.0);
+    	double gc_latitude = intent.getDoubleExtra("latitude", 0.0);
+    	double gc_longitude = intent.getDoubleExtra("longitude", 0.0);
+
+    	Log.i("Longitude, Latitude: ", gc_longitude + " " + gc_latitude);
     	
     	gc_difficulty = intent.getFloatExtra("difficulty", 0);
 		gc_terrain = intent.getFloatExtra("terrain", 0);
@@ -242,10 +267,10 @@ public class WatchService extends Service {
 		
         geocacheLocation.setLatitude( gc_latitude );
         geocacheLocation.setLongitude( gc_longitude );
-                
+
         //reset watch to default state
         //TODO do make sure the watchapp is listening to messages
-    	sendToPebble("NO GPS", 0, 0, 0);
+    	sendToPebble("GPS Lost", 0, 0, 0);
     	
     	Toast.makeText(this, R.string.navigation_has_started, Toast.LENGTH_LONG).show();
                 

@@ -30,74 +30,79 @@ public class NavigationActivity extends Activity {
 		/*
 		 * Parse intent from c:geo app
 		 */
-		if(intent.getAction().equals("com.webmajstr.pebble_gc.NAVIGATE_TO")){
+		switch (intent.getAction()) {
+			case "com.webmajstr.pebble_gc.NAVIGATE_TO":
 
-			gc_latitude = intent.getDoubleExtra("latitude", 0.0);
-			gc_longitude = intent.getDoubleExtra("longitude", 0.0);
-			gc_difficulty = intent.getFloatExtra("difficulty", 0);
-			gc_terrain = intent.getFloatExtra("terrain", 0);
-			gc_name = intent.getStringExtra("name");
-			gc_code = intent.getStringExtra("code");
-			gc_size = intent.getStringExtra("size");
+				gc_latitude = intent.getDoubleExtra("latitude", 0.0);
+				gc_longitude = intent.getDoubleExtra("longitude", 0.0);
+				gc_difficulty = intent.getFloatExtra("difficulty", 0);
+				gc_terrain = intent.getFloatExtra("terrain", 0);
+				gc_name = intent.getStringExtra("name");
+				gc_code = intent.getStringExtra("code");
+				gc_size = intent.getStringExtra("size");
 
-			startWatchService();
-			finish();
+				startWatchService();
+				finish();
 
-		/*
-		 * Parse intent from Locus app. This should be expanded to support more apps. But are there any standards? :)
-		 * Google Maps are not supported as it doesn't provide coordinates :/
-		 */
-		} else if (intent.getAction().equals(Intent.ACTION_SEND)){
-			
-			String text = intent.getStringExtra("android.intent.extra.TEXT");
-			if (text != null){
-				
-				text = text.replace("°", " ");
-				text = text.replace("'", " ");
-				
-				Coordinates gps = new Coordinates();
-				
-				// Locus app has new format for coordinates.. It says "Point, " at begining of data... :/ 
-				// This is a dirty hack..
-				String text2 = text.substring( text.indexOf(",") + 1 );
-								
-				if( gps.parse( text ) || (gps.parse( text2 ) ) ){
-		        	
-		        	gc_latitude = gps.getLatitude();
-					gc_longitude = gps.getLongitude();
-					
-					gc_name = gc_code = gc_size = null;
-					
-					startWatchService();
-					finish();
-		        	
-		        } else {
-		        	Toast.makeText(getApplicationContext(), getText(R.string.error_message) + " #13", Toast.LENGTH_SHORT).show();
-		        }
-					
-			} else {
-				Toast.makeText(getApplicationContext(), getText(R.string.error_message) + " #14", Toast.LENGTH_SHORT).show();
-			}
-			
-			
-		/*
-		 * Parse intent from basic Radar request. Works for example with official GeoCaching app.
-		 */
-		} else if (intent.getAction().equals("com.google.android.radar.SHOW_RADAR")) {
-			
-			gc_latitude = intent.getFloatExtra("latitude", 0.0f);
-			gc_longitude = intent.getFloatExtra("longitude", 0.0f);
-			
-			gc_name = gc_code = gc_size = null;
-			
-			startWatchService();
-			finish();
-			
-		/*
-		 * Not yet implemented. 
-		 */
-		} else if (intent.getAction().equals(Intent.ACTION_VIEW)){
-			
+				/*
+				 * Parse intent from Locus app. This should be expanded to support more apps. But are there any standards? :)
+				 * Google Maps are not supported as it doesn't provide coordinates :/
+				 */
+				break;
+			case Intent.ACTION_SEND:
+
+				String text = intent.getStringExtra("android.intent.extra.TEXT");
+				if (text != null) {
+
+					text = text.replace("°", " ");
+					text = text.replace("'", " ");
+
+					Coordinates gps = new Coordinates();
+
+					// Locus app has new format for coordinates.. It says "Point, " at begining of data... :/
+					// This is a dirty hack..
+					String text2 = text.substring(text.indexOf(",") + 1);
+
+					if (gps.parse(text) || (gps.parse(text2))) {
+
+						gc_latitude = gps.getLatitude();
+						gc_longitude = gps.getLongitude();
+
+						gc_name = gc_code = gc_size = null;
+
+						startWatchService();
+						finish();
+
+					} else {
+						Toast.makeText(getApplicationContext(), getText(R.string.error_message) + " #13", Toast.LENGTH_SHORT).show();
+					}
+
+				} else {
+					Toast.makeText(getApplicationContext(), getText(R.string.error_message) + " #14", Toast.LENGTH_SHORT).show();
+				}
+
+
+				/*
+				 * Parse intent from basic Radar request. Works for example with official GeoCaching app.
+				 */
+				break;
+			case "com.google.android.radar.SHOW_RADAR":
+
+				gc_latitude = intent.getFloatExtra("latitude", 0.0f);
+				gc_longitude = intent.getFloatExtra("longitude", 0.0f);
+
+				gc_name = gc_code = gc_size = null;
+
+				startWatchService();
+				finish();
+
+				/*
+				 * Not yet implemented.
+				 */
+				break;
+			case Intent.ACTION_VIEW:
+
+				break;
 		}
 
 	}
