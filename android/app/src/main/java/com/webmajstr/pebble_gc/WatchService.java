@@ -34,6 +34,10 @@ import androidx.core.app.NotificationCompat;
 
 public class WatchService extends Service {
 
+	boolean isImperial = true;
+	double distMultiplier;
+	String distFormat;
+
 	LocationManager locationManager;
 	LocationListener locationListener;
 
@@ -65,6 +69,14 @@ public class WatchService extends Service {
 
 	@Override
 	public void onCreate() {
+
+		if(isImperial){
+			distMultiplier = 3.28084;
+			distFormat = "%d ft";
+		}else{
+			distMultiplier = 1;
+			distFormat = "%d m";
+		}
 		super.onCreate();
 
 		// Listen when notification is clicked to close the service
@@ -169,7 +181,7 @@ public class WatchService extends Service {
     public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
     	int bearingInt = Math.round(bearing);
-    	int distanceInt = Math.round(distance);
+    	int distanceInt = (int) Math.round(distance*distMultiplier);
     	int azimuthInt = Math.round(azimuth);
     	
     	// convert bearing in degrees to index of image to show. north +- 15 degrees is index 0,
@@ -181,7 +193,7 @@ public class WatchService extends Service {
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
     	    	
-    	sendToPebble(String.format(locale,"%d m", distanceInt), bearingIndex, azimuthInt, Math.round(declination) );
+    	sendToPebble(String.format(locale,distFormat, distanceInt), bearingIndex, azimuthInt, Math.round(declination) );
     	
     }
     
