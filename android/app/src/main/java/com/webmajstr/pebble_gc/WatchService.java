@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
+import com.google.android.gms.location.LocationRequest;
 
 import android.Manifest;
 import android.app.Notification;
@@ -36,7 +37,6 @@ public class WatchService extends Service {
 	LocationManager locationManager;
 	LocationListener locationListener;
 
-	PendingIntent contentIntent;
 	Locale locale = Locale.ENGLISH;
 
 	Location geocacheLocation = new Location("");
@@ -104,18 +104,23 @@ public class WatchService extends Service {
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 		// Define a listener that 'responds' to location updates
+		Log.i("GPS", "Initialise");
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
+				Log.i("GPS", "New Location");
 				locationUpdate(location);
 			}
 
 			public void onStatusChanged(String provider, int status, Bundle extras) {
+				Log.i("GPS", "Status Changed To: " + status);
 			}
 
 			public void onProviderEnabled(String provider) {
+				Log.i("GPS", "Enabled");
 			}
 
 			public void onProviderDisabled(String provider) {
+				Log.i("GPS", "Disabled");
 			}
 		};
 
@@ -257,7 +262,7 @@ public class WatchService extends Service {
     	double gc_latitude = intent.getDoubleExtra("latitude", 0.0);
     	double gc_longitude = intent.getDoubleExtra("longitude", 0.0);
 
-    	Log.i("Longitude, Latitude: ", gc_longitude + " " + gc_latitude);
+    	Log.i("Lon & Lat of Target", gc_longitude + " " + gc_latitude);
     	
     	gc_difficulty = intent.getFloatExtra("difficulty", 0);
 		gc_terrain = intent.getFloatExtra("terrain", 0);
