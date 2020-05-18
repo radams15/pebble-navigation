@@ -1,0 +1,54 @@
+{
+  "name": "geocaching",
+  "author": "WebMajstr",
+  "version": "1.0.0",
+  "keywords": ["pebble-app"],
+  "private": true,
+  "dependencies": {},
+  "pebble": {
+    "uuid": "6191ad65-6cb1-404f-bccc-2446654c20ab",
+    "displayName": "geocaching",
+    "companyName": "WebMajstr",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "messageKeys": [
+      "dummy"
+    ],
+    "resources": {
+      "media": [
+        {
+          "menuIcon": true,
+          "type": "png",
+          "name": "IMAGE_MENU_ICON",
+          "file": "images/menu_icon_geocache.png"
+        },
+        {
+          "type": "png",
+          "name": "NO_BT",
+          "file": "images/no_bt.png"
+        },
+        {
+          "type": "font",
+          "name": "FONT_ROBOTO_CONDENSED_30",
+          "file": "fonts/Roboto-Condensed.ttf"
+        },
+        {
+          "type": "font",
+          "name": "FONT_ROBOTO_BOLD_SUBSET_22",
+          "file": "fonts/Roboto-Bold.ttf"
+        },
+        {
+          "type": "font",
+          "name": "FONT_ROBOTO_CONDENSED_36",
+          "file": "fonts/Roboto-Condensed.ttf"
+        }
+      ]
+    }
+  }
+}

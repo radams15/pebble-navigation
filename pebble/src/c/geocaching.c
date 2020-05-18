@@ -303,7 +303,6 @@ void handle_init(void) {
 
   window_set_background_color(window, GColorBlack);
 
-  window_set_fullscreen(window, true);
   window_stack_push(window, true);
 
   Layer *window_layer = window_get_root_layer(window);

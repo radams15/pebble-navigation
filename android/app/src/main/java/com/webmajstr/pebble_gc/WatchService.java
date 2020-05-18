@@ -36,7 +36,10 @@ public class WatchService extends Service {
 
 	boolean isImperial = true;
 	double distMultiplier;
-	String distFormat;
+
+	int kmCutoff = 1000; // when to turn m to km
+	int miCutoff = 5280; // when to turn ft to mi
+	boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
 
 	LocationManager locationManager;
 	LocationListener locationListener;
@@ -69,14 +72,6 @@ public class WatchService extends Service {
 
 	@Override
 	public void onCreate() {
-
-		if(isImperial){
-			distMultiplier = 3.28084;
-			distFormat = "%d ft";
-		}else{
-			distMultiplier = 1;
-			distFormat = "%d m";
-		}
 		super.onCreate();
 
 		// Listen when notification is clicked to close the service
@@ -181,19 +176,40 @@ public class WatchService extends Service {
     public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
     	int bearingInt = Math.round(bearing);
-    	int distanceInt = (int) Math.round(distance*distMultiplier);
     	int azimuthInt = Math.round(azimuth);
     	
     	// convert bearing in degrees to index of image to show. north +- 15 degrees is index 0,
     	// bearing of 30 degrees +- 15 degrees is index 1, etc..
     	int bearingIndex = ((bearingInt + 15)/30) % 12;
 
+		String distString;
+		int distanceInt;
+
+		if(isImperial){
+			distanceInt = (int) Math.round(distance*3.28084);
+			distMultiplier = 3.28084;
+
+			if(distanceInt > miCutoff && changeUnits) {
+				distString = String.format(locale, "%.2f mi", distanceInt / (float)5280);
+			}else{
+				distString = String.format(locale, "%d ft", distanceInt);
+			}
+
+		}else{
+			distanceInt = Math.round(distance);
+			if(distanceInt > kmCutoff && changeUnits) {
+				distString = String.format(locale, "%.2f km", distanceInt / (float)1000);
+			}else{
+				distString = String.format(locale, "%d m", distanceInt);
+			}
+		}
+
         Log.i("Distance", String.format(locale,"%d m", distanceInt));
         Log.i("Bearing", String.valueOf(bearingIndex));
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
     	    	
-    	sendToPebble(String.format(locale,distFormat, distanceInt), bearingIndex, azimuthInt, Math.round(declination) );
+    	sendToPebble(distString, bearingIndex, azimuthInt, Math.round(declination) );
     	
     }
     

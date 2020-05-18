@@ -1,0 +1,54 @@
+{
+    "targetPlatforms": [
+        "aplite"
+    ], 
+    "displayName": "geocaching", 
+    "name": "geocaching", 
+    "messageKeys": {
+        "dummy": 10000
+    }, 
+    "companyName": "WebMajstr", 
+    "enableMultiJS": true, 
+    "versionLabel": "1.0", 
+    "capabilities": [], 
+    "sdkVersion": "3", 
+    "appKeys": {
+        "dummy": 10000
+    }, 
+    "longName": "geocaching", 
+    "shortName": "geocaching", 
+    "watchapp": {
+        "watchface": false
+    }, 
+    "resources": {
+        "media": [
+            {
+                "menuIcon": true, 
+                "type": "png", 
+                "name": "IMAGE_MENU_ICON", 
+                "file": "images/menu_icon_geocache.png"
+            }, 
+            {
+                "type": "png", 
+                "name": "NO_BT", 
+                "file": "images/no_bt.png"
+            }, 
+            {
+                "type": "font", 
+                "name": "FONT_ROBOTO_CONDENSED_30", 
+                "file": "fonts/Roboto-Condensed.ttf"
+            }, 
+            {
+                "type": "font", 
+                "name": "FONT_ROBOTO_BOLD_SUBSET_22", 
+                "file": "fonts/Roboto-Bold.ttf"
+            }, 
+            {
+                "type": "font", 
+                "name": "FONT_ROBOTO_CONDENSED_36", 
+                "file": "fonts/Roboto-Condensed.ttf"
+            }
+        ]
+    }, 
+    "uuid": "6191ad65-6cb1-404f-bccc-2446654c20ab"
+}
