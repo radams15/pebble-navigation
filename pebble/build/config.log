@@ -1,17 +1,39 @@
-# project  configured on Mon May 18 17:43:22 2020 by
+# project  configured on Mon May 18 20:50:26 2020 by
 # waf 1.7.11 (abi 98, python 2070af0 on darwin)
 # using /Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/waf configure
 #
 ----------------------------------------
 Setting top to
-/Users/rhys/Desktop/pebble-navigation/pebble_new
+/Users/rhys/Desktop/pebble-navigation/pebble
 ----------------------------------------
 Setting out to
-/Users/rhys/Desktop/pebble-navigation/pebble_new/build
+/Users/rhys/Desktop/pebble-navigation/pebble/build
 ----------------------------------------
 Checking for program webpack
 /Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/node_modules/.bin/webpack
 find program=['webpack'] paths=['/Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/node_modules/.bin'] var='WEBPACK' -> '/Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/node_modules/.bin/webpack'
+----------------------------------------
+Found Pebble SDK for chalk in:
+/Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/chalk
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
+----------------------------------------
+Found Pebble SDK for basalt in:
+/Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/basalt
+----------------------------------------
+Checking for program gcc,cc
+arm-none-eabi-gcc
+find program=['gcc', 'cc'] paths='' var='CC' -> 'arm-none-eabi-gcc'
+----------------------------------------
+Checking for program ar
+arm-none-eabi-ar
+find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
 ----------------------------------------
 Found Pebble SDK for aplite in:
 /Users/rhys/Library/Application Support/Pebble SDK/SDKs/current/sdk-core/pebble/aplite

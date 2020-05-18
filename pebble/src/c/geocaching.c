@@ -1,4 +1,5 @@
 #include "pebble.h"
+#include <string.h>
 
 // ADDED GPath point definitions for arrow and north marker
 static const GPathInfo ARROW_POINTS =
@@ -31,7 +32,7 @@ static const GPathInfo NORTH_POINTS =
   }
 };
 
-// updated to match new Adroid app
+// updated to match new Android app
 enum GeoKey {
   DISTANCE_KEY = 0x0,
   BEARING_INDEX_KEY = 0x1,
@@ -72,6 +73,60 @@ static uint8_t sync_buffer[150];
 
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed);
 
+char disp_buf[32];
+
+const char* DELIMITER = ","; // Unit delimiter from phone app.
+
+int unitMode = 1; // 0 -> imperial, 1 -> metric
+
+char *strtok(char* s, const char *delim)
+{
+	char *spanp;
+	int c, sc;
+	char *tok;
+	static char *last;
+
+
+	if (s == NULL && (s = last) == NULL)
+		return (NULL);
+
+	/*
+	 * Skip (span) leading delimiters (s += strspn(s, delim), sort of).
+	 */
+cont:
+	c = *s++;
+	for (spanp = (char *)delim; (sc = *spanp++) != 0;) {
+		if (c == sc)
+			goto cont;
+	}
+
+	if (c == 0) {		/* no non-delimiter characters */
+		last = NULL;
+		return (NULL);
+	}
+	tok = s - 1;
+
+	/*
+	 * Scan token (scan for delimiters: s += strcspn(s, delim), sort of).
+	 * Note that delim must have one NUL; we stop if we see that, too.
+	 */
+	for (;;) {
+		c = *s++;
+		spanp = (char *)delim;
+		do {
+			if ((sc = *spanp++) == c) {
+				if (c == 0)
+					s = NULL;
+				else
+					s[-1] = 0;
+				last = s;
+				return (tok);
+			}
+		} while (sc != 0);
+	}
+	/* NOTREACHED */
+}
+
 static void sync_tuple_changed_callback(const uint32_t key,
                                         const Tuple* new_tuple,
                                         const Tuple* old_tuple,
@@ -80,7 +135,34 @@ static void sync_tuple_changed_callback(const uint32_t key,
   switch (key) {
 
     case DISTANCE_KEY:
-      text_layer_set_text(text_distance_layer, new_tuple->value->cstring);
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data Recieved");
+      // I've ruined this good code with a terrible, terrible hack that stops me needing to send a button press back to the phone. I'm sorry.
+      char distances[2][16];
+      const char* distanceData = new_tuple->value->cstring;
+
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data: %s", distanceData);
+
+      char distanceDataArray[64];
+      strncpy(distanceDataArray, distanceData, 63);
+
+      char *pt;
+      pt = strtok (distanceDataArray, DELIMITER);
+      printf("%s\n", pt);
+      int x = 0;
+      while (pt != NULL) {
+          strncpy(distances[x], pt, sizeof(distances[x])-1);
+          // strncpy is not adding a \0 at the end of the string after copying it so you need to add it by yourself
+          distances[x][sizeof(distances[x])-1] = '\0';
+
+          pt = strtok (NULL, DELIMITER); // get next token
+          x++;
+      }
+
+      snprintf(disp_buf, sizeof(disp_buf), "%s", distances[unitMode]);
+
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Imperial Data: %s", distances[0]);
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Metric Data: %s", distances[1]);
+      text_layer_set_text(text_distance_layer, disp_buf);
       rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "NO", 2) != 0) ? true : false;
       break;
 
@@ -268,12 +350,20 @@ void down_click_handler(ClickRecognizerRef recognizer, void *context) {
     text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
 
   }
-
 }
+
+void select_click_handler(ClickRecognizerRef recognizer, void *context) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Changing Unit Mode From: %d", unitMode);
+  unitMode = !unitMode;
+}
+
+
 
 void config_buttons_provider(void *context) {
    window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
    window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
+   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
+   APP_LOG(APP_LOG_LEVEL_DEBUG, "Button Subscription Complete");
  }
 
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {

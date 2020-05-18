@@ -40,6 +40,7 @@ public class WatchService extends Service {
 	int kmCutoff = 1000; // when to turn m to km
 	int miCutoff = 5280; // when to turn ft to mi
 	boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
+	String DELIMITER = ","; // watch string split delimiter
 
 	LocationManager locationManager;
 	LocationListener locationListener;
@@ -182,27 +183,25 @@ public class WatchService extends Service {
     	// bearing of 30 degrees +- 15 degrees is index 1, etc..
     	int bearingIndex = ((bearingInt + 15)/30) % 12;
 
-		String distString;
+		String distString = "";
 		int distanceInt;
-
-		if(isImperial){
 			distanceInt = (int) Math.round(distance*3.28084);
 			distMultiplier = 3.28084;
 
 			if(distanceInt > miCutoff && changeUnits) {
-				distString = String.format(locale, "%.2f mi", distanceInt / (float)5280);
+				distString += String.format(locale, "%.2f mi", distanceInt / (float)5280);
 			}else{
-				distString = String.format(locale, "%d ft", distanceInt);
+				distString += String.format(locale, "%d ft", distanceInt);
 			}
 
-		}else{
+			distString += DELIMITER;
+
 			distanceInt = Math.round(distance);
 			if(distanceInt > kmCutoff && changeUnits) {
-				distString = String.format(locale, "%.2f km", distanceInt / (float)1000);
+				distString += String.format(locale, "%.2f km", distanceInt / (float)1000);
 			}else{
-				distString = String.format(locale, "%d m", distanceInt);
+				distString += String.format(locale, "%d m", distanceInt);
 			}
-		}
 
         Log.i("Distance", String.format(locale,"%d m", distanceInt));
         Log.i("Bearing", String.valueOf(bearingIndex));
