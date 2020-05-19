@@ -1,11 +1,12 @@
 package com.webmajstr.pebble_gc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
-import com.google.android.gms.location.LocationRequest;
 
 import android.Manifest;
 import android.app.Notification;
@@ -37,8 +38,9 @@ public class WatchService extends Service {
 	boolean isImperial = true;
 	double distMultiplier;
 
-	int kmCutoff = 1000; // when to turn m to km
-	int miCutoff = 5280; // when to turn ft to mi
+	int mCutoff = 1000; // when to turn m to km
+	int ftCutoff = 5280; // when to turn ft to mi
+	int ydCutoff = 1760; // when to turn yd to mi
 	boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
 	String DELIMITER = ","; // watch string split delimiter
 
@@ -184,26 +186,34 @@ public class WatchService extends Service {
     	int bearingIndex = ((bearingInt + 15)/30) % 12;
 
 		String distString = "";
-		int distanceInt;
-			distanceInt = (int) Math.round(distance*3.28084);
-			distMultiplier = 3.28084;
+		int distanceFt = (int) Math.round(distance*3.28084);
+		int distanceYd = (int) Math.round(distance*1.09361);
+		int distanceM = Math.round(distance);
+		ArrayList measurements = new ArrayList();
 
-			if(distanceInt > miCutoff && changeUnits) {
-				distString += String.format(locale, "%.2f mi", distanceInt / (float)5280);
-			}else{
-				distString += String.format(locale, "%d ft", distanceInt);
-			}
+		if(distanceFt > ftCutoff && changeUnits) {
+			distString += String.format(locale, "%.2f mi", distanceFt / (float)5280);
+		}else{
+			distString += String.format(locale, "%d ft", distanceFt);
+		}
 
-			distString += DELIMITER;
+		distString += DELIMITER;
 
-			distanceInt = Math.round(distance);
-			if(distanceInt > kmCutoff && changeUnits) {
-				distString += String.format(locale, "%.2f km", distanceInt / (float)1000);
-			}else{
-				distString += String.format(locale, "%d m", distanceInt);
-			}
+		if(distanceYd > ydCutoff && changeUnits) {
+			distString += String.format(locale, "%.2f mi", distanceYd / (float)1760);
+		}else{
+			distString += String.format(locale, "%d yd", distanceYd);
+		}
 
-        Log.i("Distance", String.format(locale,"%d m", distanceInt));
+		distString += DELIMITER;
+
+		if(distanceM > mCutoff && changeUnits) {
+			distString += String.format(locale, "%.2f km", distanceM / (float)1000);
+		}else{
+			distString += String.format(locale, "%d m", distanceM);
+		}
+
+        Log.i("Distance", String.format(locale,"%d m", distanceM));
         Log.i("Bearing", String.valueOf(bearingIndex));
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
@@ -224,8 +234,6 @@ public class WatchService extends Service {
         data.addInt16(DECLINATION_KEY, (short) decl);
         data.addUint8(EXTRAS_KEY, (byte)(hasExtras?1:0) );
 
-        Log.i("Nace", String.valueOf( (short)decl ));
-        
         if(hasExtras){
         	
         	data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
