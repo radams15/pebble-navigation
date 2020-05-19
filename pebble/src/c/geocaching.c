@@ -1,6 +1,18 @@
 #include "pebble.h"
 #include <string.h>
 
+// to the original owner - i'm not the best C programmer, so some of the stuff is directly from stackoverflow, and my own twisted understanding of pointers, etc.
+
+#define unitAmount 3 // the amount of units passed to the watch
+
+/*#ifdef PBL_COLOR
+  #define bg GColorRed
+  #define fg GColorBlack
+#else*/
+  #define fg GColorWhite
+  #define bg GColorBlack
+//#endif
+
 // ADDED GPath point definitions for arrow and north marker
 static const GPathInfo ARROW_POINTS =
 {
@@ -66,7 +78,7 @@ TextLayer *text_distance_layer;
 TextLayer *text_time_layer;
 Layer *line_layer;
 
-static uint8_t data_display = 0;
+static uint8_t data_display = 0; // default for the bottom info bar
 
 static AppSync sync;
 static uint8_t sync_buffer[150];
@@ -77,7 +89,7 @@ char disp_buf[32];
 
 const char* DELIMITER = ","; // Unit delimiter from phone app.
 
-int unitMode = 1; // 0 -> imperial, 1 -> metric
+int unitMode = 2; // 0 -> feet, 1 -> yard, 2 -> metres
 
 char *strtok(char* s, const char *delim)
 {
@@ -135,35 +147,39 @@ static void sync_tuple_changed_callback(const uint32_t key,
   switch (key) {
 
     case DISTANCE_KEY:
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data Recieved");
+      printf("\n"); // just as ou can't put assignment after the case statement for some reason
       // I've ruined this good code with a terrible, terrible hack that stops me needing to send a button press back to the phone. I'm sorry.
-      char distances[2][16];
+      char distances[unitAmount][16]; // 3 measurements, with 16 bytes of data in each
       const char* distanceData = new_tuple->value->cstring;
 
       APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data: %s", distanceData);
 
-      char distanceDataArray[64];
-      strncpy(distanceDataArray, distanceData, 63);
+      if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
+        snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "No Connection Data Recieved");
+      }else{
+        APP_LOG(APP_LOG_LEVEL_DEBUG, "Actual Distance Data Recieved");
+        char distanceDataArray[64];
+        strncpy(distanceDataArray, distanceData, 63);
 
-      char *pt;
-      pt = strtok (distanceDataArray, DELIMITER);
-      printf("%s\n", pt);
-      int x = 0;
-      while (pt != NULL) {
-          strncpy(distances[x], pt, sizeof(distances[x])-1);
-          // strncpy is not adding a \0 at the end of the string after copying it so you need to add it by yourself
-          distances[x][sizeof(distances[x])-1] = '\0';
+        char *pt;
+        pt = strtok (distanceDataArray, DELIMITER);
+        int x = 0;
+        while (pt != NULL) {
+            strncpy(distances[x], pt, sizeof(distances[x])-1);
+            // strncpy is not adding a \0 at the end of the string after copying it so you need to add it by yourself
+            distances[x][sizeof(distances[x])-1] = '\0';
 
-          pt = strtok (NULL, DELIMITER); // get next token
-          x++;
+            pt = strtok (NULL, DELIMITER); // get next token
+            x++;
+
+            APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance: %s", distances[2]);
+        }
+
+        snprintf(disp_buf, sizeof(disp_buf), "%s", distances[unitMode]);
       }
-
-      snprintf(disp_buf, sizeof(disp_buf), "%s", distances[unitMode]);
-
-      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Imperial Data: %s", distances[0]);
-      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Metric Data: %s", distances[1]);
       text_layer_set_text(text_distance_layer, disp_buf);
-      rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "NO", 2) != 0) ? true : false;
+      rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "GPS", 3) != 0) ? true : false;
       break;
 
 // NEW
@@ -182,17 +198,12 @@ static void sync_tuple_changed_callback(const uint32_t key,
 
 // Draw line between geocaching data and time
 void line_layer_update_callback(Layer *layer, GContext* ctx) {
-  graphics_context_set_fill_color(ctx, GColorWhite);
+  graphics_context_set_fill_color(ctx, fg);
   graphics_fill_rect(ctx, layer_get_bounds(layer), 0, GCornerNone);
 }
 
-// NEW compass handler
+// compass handler
 void handle_compass(CompassHeadingData heading_data){
-/*
-  static char buf[64];
-  snprintf(buf, sizeof(buf), " %d°", declination);
-  text_layer_set_text(text_distance_layer, buf);
-*/
   north_heading = TRIGANGLE_TO_DEG(heading_data.magnetic_heading) - declination;
   if (north_heading >= 360) north_heading -= 360;
   if (north_heading < 0) north_heading += 360;
@@ -200,11 +211,11 @@ void handle_compass(CompassHeadingData heading_data){
   layer_mark_dirty(arrow_layer);
 }
 
-// NEW arrow layer update handler
+// arrow layer update handler
 void arrow_layer_update_callback(Layer *path, GContext *ctx) {
 
-  graphics_context_set_fill_color(ctx, GColorWhite);
-  graphics_context_set_stroke_color(ctx, GColorWhite);
+  graphics_context_set_fill_color(ctx, fg);
+  graphics_context_set_stroke_color(ctx, fg);
 
   compass_heading = bearing + north_heading;
   if (compass_heading >= 360) {
@@ -230,38 +241,18 @@ void arrow_layer_update_callback(Layer *path, GContext *ctx) {
   } else {
     gpath_draw_filled(ctx, north);
   }
-
-/*
-// NEW draw a dot at North heading. This has been replaced by an arrow (looks better)
-
-  int north_dot_size = 5;
-  int north_length;
-
-  north_length = (arrow_centre.x < arrow_centre.y) ? arrow_centre.x : arrow_centre.y;
-  north_length -= north_dot_size / 2;
-
-  int north_x = (int16_t)(sin_lookup(north_heading * TRIG_MAX_ANGLE / 360) * north_length / TRIG_MAX_RATIO) + arrow_centre.x;
-  int north_y = (int16_t)(-cos_lookup(north_heading * TRIG_MAX_ANGLE / 360) * north_length / TRIG_MAX_RATIO) + arrow_centre.y;
-
-  graphics_fill_circle(ctx, GPoint(north_x, north_y), north_dot_size);
-  graphics_context_set_stroke_color(ctx, GColorBlack);
-  graphics_draw_circle(ctx, GPoint(north_x, north_y),north_dot_size);
-*/
 }
 
 void bluetooth_connection_changed(bool connected) {
 
   if (!connected) {
-// deleted bitmap destroy and redraw
-
-// ADDED text instead of bitmap
-    text_layer_set_text(text_distance_layer, "NO BT");
+    text_layer_set_text(text_distance_layer, "BT Lost");
 
     //vibes_short_pulse();
 
   } else {
     const Tuple *tuple = app_sync_get(&sync, DISTANCE_KEY);
-    text_layer_set_text(text_distance_layer, (tuple == NULL) ? "NO GPS" : tuple->value->cstring);
+    text_layer_set_text(text_distance_layer, (tuple == NULL) ? "GPS Lost" : tuple->value->cstring);
   }
   if (strncmp(text_layer_get_text(text_distance_layer), "NO", 2) != 0) {
     rot_arrow = true;
@@ -275,41 +266,45 @@ bool have_additional_data(){
   return (tuple == NULL || tuple->value->uint8 == 0)? false : true;
 }
 
+void handle_display(){
+  if(data_display == 0){ // time and date
+    tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+
+  } else if(data_display == 1){ // geocache name
+
+    const Tuple *tuple = app_sync_get(&sync, GC_NAME_KEY);
+    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
+    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "");
+
+  } else if(data_display == 2){ // geocache code
+
+    const Tuple *tuple = app_sync_get(&sync, GC_CODE_KEY);
+    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
+    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "");
+
+  } else if(data_display == 3){ // geocache size
+
+    const Tuple *tuple = app_sync_get(&sync, GC_SIZE_KEY);
+    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
+    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "");
+
+  } else if(data_display == 4){ // difficulty
+
+    tick_timer_service_unsubscribe();
+
+    const Tuple *tuple = app_sync_get(&sync, DT_RATING_KEY);
+    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
+    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "");
+
+  }
+}
+
 void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 
   data_display++;
   data_display %= 5;
 
-  if ( !have_additional_data() ) data_display = 0;
-
-  if(data_display == 0){
-    tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
-  } else if(data_display == 1){
-
-    tick_timer_service_unsubscribe();
-    const Tuple *tuple = app_sync_get(&sync, GC_NAME_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 2){
-
-    const Tuple *tuple = app_sync_get(&sync, GC_CODE_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 3){
-
-    const Tuple *tuple = app_sync_get(&sync, GC_SIZE_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 4){
-
-    const Tuple *tuple = app_sync_get(&sync, DT_RATING_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  }
+  handle_display();
 
 }
 
@@ -318,43 +313,15 @@ void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   if(data_display == 0) data_display = 5;
   data_display--;
 
-  if ( !have_additional_data() ) data_display = 0;
-
-  if(data_display == 0){
-    tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
-
-  } else if(data_display == 1){
-
-    const Tuple *tuple = app_sync_get(&sync, GC_NAME_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 2){
-
-    const Tuple *tuple = app_sync_get(&sync, GC_CODE_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 3){
-
-    const Tuple *tuple = app_sync_get(&sync, GC_SIZE_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  } else if(data_display == 4){
-
-    tick_timer_service_unsubscribe();
-
-    const Tuple *tuple = app_sync_get(&sync, DT_RATING_KEY);
-    const char *gc_data = tuple == NULL ? "" : tuple->value->cstring;
-    text_layer_set_text(text_time_layer, *gc_data ? gc_data : "??");
-
-  }
+  handle_display();
 }
 
 void select_click_handler(ClickRecognizerRef recognizer, void *context) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Changing Unit Mode From: %d", unitMode);
-  unitMode = !unitMode;
+  unitMode += 1;
+  if(unitMode > unitAmount-1){ // if max of the unit array
+    unitMode = 0;
+  }
 }
 
 
@@ -367,12 +334,10 @@ void config_buttons_provider(void *context) {
  }
 
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
-// UPDATED to include date
   static char time_text[] = "XXX XX 00:00";
 
   char *time_format;
 
-// UPDATED to include date
   if (clock_is_24h_style()) {
     time_format = "%b %e %R";
   } else {
@@ -391,7 +356,7 @@ void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
 void handle_init(void) {
   window = window_create();
 
-  window_set_background_color(window, GColorBlack);
+  window_set_background_color(window, bg);
 
   window_stack_push(window, true);
 
@@ -403,7 +368,7 @@ void handle_init(void) {
 
   ResHandle roboto_36 = resource_get_handle(RESOURCE_ID_FONT_ROBOTO_CONDENSED_36);
   text_distance_layer = text_layer_create(GRect(0, 0, 144, 40));
-  text_layer_set_text_color(text_distance_layer, GColorWhite);
+  text_layer_set_text_color(text_distance_layer, fg);
   text_layer_set_text_alignment(text_distance_layer, GTextAlignmentCenter);
   text_layer_set_background_color(text_distance_layer, GColorClear);
   text_layer_set_font(text_distance_layer, fonts_load_custom_font(roboto_36));
@@ -420,7 +385,7 @@ void handle_init(void) {
 
   ResHandle roboto_22 = resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_SUBSET_22);
   text_time_layer = text_layer_create(GRect(0, 2, 144, 32));
-  text_layer_set_text_color(text_time_layer, GColorWhite);
+  text_layer_set_text_color(text_time_layer, fg);
   text_layer_set_text_alignment(text_time_layer, GTextAlignmentCenter);
   text_layer_set_background_color(text_time_layer, GColorClear);
   text_layer_set_font(text_time_layer, fonts_load_custom_font(roboto_22));
@@ -432,7 +397,7 @@ void handle_init(void) {
 
 // deleted bitmap layer create
 
-// NEW definitions for Path layer, adjusted size due to a glitch drawing the North dot
+// definitions for Path layer, adjusted size due to a glitch drawing the North dot
   arrow_layer = layer_create(GRect(0, 0, 144, 79));
   layer_set_update_proc(arrow_layer, arrow_layer_update_callback);
   layer_add_child(compass_holder, arrow_layer);
@@ -469,7 +434,8 @@ void handle_init(void) {
 
   // Subscribe to notifications
   bluetooth_connection_service_subscribe(bluetooth_connection_changed);
-  tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+  //tick_timer_service_subscribe(MINUTE_UNIT, handle_minute_tick);
+  handle_display();
 // compass service added
   compass_service_subscribe(handle_compass);
   compass_service_set_heading_filter(2 * (TRIG_MAX_ANGLE/360));

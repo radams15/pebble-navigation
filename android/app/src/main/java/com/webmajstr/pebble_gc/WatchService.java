@@ -1,7 +1,6 @@
 package com.webmajstr.pebble_gc;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -27,9 +26,11 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
@@ -176,7 +177,7 @@ public class WatchService extends Service {
     }
     
     
-    public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
+	public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
     	int bearingInt = Math.round(bearing);
     	int azimuthInt = Math.round(azimuth);
@@ -189,29 +190,27 @@ public class WatchService extends Service {
 		int distanceFt = (int) Math.round(distance*3.28084);
 		int distanceYd = (int) Math.round(distance*1.09361);
 		int distanceM = Math.round(distance);
-		ArrayList measurements = new ArrayList();
+		ArrayList<String> measurements = new ArrayList<>();
 
 		if(distanceFt > ftCutoff && changeUnits) {
-			distString += String.format(locale, "%.2f mi", distanceFt / (float)5280);
+			measurements.add(String.format(locale, "%.2f mi", distanceFt / (float)5280));
 		}else{
-			distString += String.format(locale, "%d ft", distanceFt);
+			measurements.add(String.format(locale, "%d ft", distanceFt));
 		}
-
-		distString += DELIMITER;
 
 		if(distanceYd > ydCutoff && changeUnits) {
-			distString += String.format(locale, "%.2f mi", distanceYd / (float)1760);
+			measurements.add(String.format(locale, "%.2f mi", distanceYd / (float)1760));
 		}else{
-			distString += String.format(locale, "%d yd", distanceYd);
+			measurements.add(String.format(locale, "%d yd", distanceYd));
 		}
-
-		distString += DELIMITER;
 
 		if(distanceM > mCutoff && changeUnits) {
-			distString += String.format(locale, "%.2f km", distanceM / (float)1000);
+			measurements.add(String.format(locale, "%.2f km", distanceM / (float)1000));
 		}else{
-			distString += String.format(locale, "%d m", distanceM);
+			measurements.add(String.format(locale, "%d m", distanceM));
 		}
+
+		distString = TextUtils.join(DELIMITER, measurements);
 
         Log.i("Distance", String.format(locale,"%d m", distanceM));
         Log.i("Bearing", String.valueOf(bearingIndex));
