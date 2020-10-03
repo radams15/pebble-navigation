@@ -30,144 +30,142 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 public class WatchService extends Service {
+    int mCutoff = 1000; // when to turn m to km
+    int ftCutoff = 5280; // when to turn ft to mi
+    int ydCutoff = 1760; // when to turn yd to mi
 
-	boolean isImperial = true;
-	double distMultiplier;
+    boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
+    boolean doFractions = true; // turn imperial decimals into rough fractions;
 
-	int mCutoff = 1000; // when to turn m to km
-	int ftCutoff = 5280; // when to turn ft to mi
-	int ydCutoff = 1760; // when to turn yd to mi
-	boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
-	String DELIMITER = ","; // watch string split delimiter
+    final String DELIMITER = ","; // watch string split delimiter
 
-	LocationManager locationManager;
-	LocationListener locationListener;
+    LocationManager locationManager;
+    LocationListener locationListener;
 
-	Locale locale = Locale.ENGLISH;
+    Locale locale = Locale.ENGLISH;
 
-	Location geocacheLocation = new Location("");
+    Location geocacheLocation = new Location("");
 
-	float gc_difficulty, gc_terrain;
-	String gc_name, gc_code, gc_size;
+    float gc_difficulty, gc_terrain;
+    String gc_name, gc_code, gc_size;
 
-	float declination = 1000;
+    float declination = 1000;
 
-	private static final int DISTANCE_KEY = 0;
-	private static final int BEARING_INDEX_KEY = 1;
-	private static final int EXTRAS_KEY = 2;
-	private static final int DT_RATING_KEY = 3;
-	private static final int GC_NAME_KEY = 4;
-	private static final int GC_CODE_KEY = 5;
-	private static final int GC_SIZE_KEY = 6;
-	private static final int AZIMUTH_KEY = 7;
-	private static final int DECLINATION_KEY = 8;
+    private static final int DISTANCE_KEY = 0;
+    private static final int BEARING_INDEX_KEY = 1;
+    private static final int EXTRAS_KEY = 2;
+    private static final int DT_RATING_KEY = 3;
+    private static final int GC_NAME_KEY = 4;
+    private static final int GC_CODE_KEY = 5;
+    private static final int GC_SIZE_KEY = 6;
+    private static final int AZIMUTH_KEY = 7;
+    private static final int DECLINATION_KEY = 8;
 
-	private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
+    private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
 
-	@Override
-	public IBinder onBind(Intent arg0) {
-		return null;
-	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-
-		// Listen when notification is clicked to close the service
-		IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
-		registerReceiver(mReceiver, filter);
-
-		//set to run in foreground, so it's not killed by android
-		showNotification();
-
-
-		//register for GPS location updates
-		registerLocationUpdates();
-
-		startWatchApp();
-
-	}
-
-	public void stopApp() {
-		this.stopSelf();
-	}
-
-	BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-
-			if (intent.getAction().equals("android.intent.CLOSE_ACTIVITY")) {
-				stopApp();
-			}
-
-		}
-
-	};
-
-	void registerLocationUpdates() {
-		// Acquire a reference to the system Location Manager
-		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-		// Define a listener that 'responds' to location updates
-		Log.i("GPS", "Initialise");
-		locationListener = new LocationListener() {
-			public void onLocationChanged(Location location) {
-				Log.i("GPS", "New Location");
-				locationUpdate(location);
-			}
-
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-				Log.i("GPS", "Status Changed To: " + status);
-			}
-
-			public void onProviderEnabled(String provider) {
-				Log.i("GPS", "Enabled");
-			}
-
-			public void onProviderDisabled(String provider) {
-				Log.i("GPS", "Disabled");
-			}
-		};
-
-		// Register the listener with the Location Manager to receive location updates
-		// impact on battery has not been determined
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			return;
-		}
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, locationListener);
-      	
+    @Override
+    public IBinder onBind(Intent arg0) {
+        return null;
     }
-    
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // Listen when notification is clicked to close the service
+        IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
+        registerReceiver(mReceiver, filter);
+
+        //set to run in foreground, so it's not killed by android
+        showNotification();
+
+
+        //register for GPS location updates
+        registerLocationUpdates();
+
+        startWatchApp();
+
+    }
+
+    public void stopApp() {
+        this.stopSelf();
+    }
+
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals("android.intent.CLOSE_ACTIVITY")) {
+                stopApp();
+            }
+
+        }
+
+    };
+
+    void registerLocationUpdates() {
+        // Acquire a reference to the system Location Manager
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        // Define a listener that 'responds' to location updates
+        Log.i("GPS", "Initialise");
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                Log.i("GPS", "New Location");
+                locationUpdate(location);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.i("GPS", "Status Changed To: " + status);
+            }
+
+            public void onProviderEnabled(String provider) {
+                Log.i("GPS", "Enabled");
+            }
+
+            public void onProviderDisabled(String provider) {
+                Log.i("GPS", "Disabled");
+            }
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        // impact on battery has not been determined
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, locationListener);
+
+    }
+
     void locationUpdate(Location currentLocation){
 
-    	if(!currentLocation.getProvider().equals("gps")) return;
-    	
-    	// calculate declination at this point. This is done only once as it shouldn't change so much at similar location on earth ;)
-    	//only run this if first time!
-    	if (declination > 999){
-    		GeomagneticField geomagneticField = new GeomagneticField((float)currentLocation.getLatitude(),
-                (float)currentLocation.getLongitude(), (float)currentLocation.getAltitude(),currentLocation.getTime());
-    		declination = geomagneticField.getDeclination();
-    	}
-    	float distance = currentLocation.distanceTo(geocacheLocation);
-    	float deviceBearing = currentLocation.getBearing();
-    	float azimuth = currentLocation.bearingTo(geocacheLocation);
-    	if(azimuth < 0) azimuth = 360 + azimuth;
-    	if(deviceBearing < 0) deviceBearing = 360 + deviceBearing;
+        if(!currentLocation.getProvider().equals("gps")) return;
 
-    	float bearing = azimuth - deviceBearing;
-		if(bearing < 0) bearing = 360 + bearing;
-		
-		updateWatchWithLocation(distance, bearing, azimuth);
-    
+        // calculate declination at this point. This is done only once as it shouldn't change so much at similar location on earth ;)
+        //only run this if first time!
+        if (declination > 999){
+            GeomagneticField geomagneticField = new GeomagneticField((float)currentLocation.getLatitude(),
+                    (float)currentLocation.getLongitude(), (float)currentLocation.getAltitude(),currentLocation.getTime());
+            declination = geomagneticField.getDeclination();
+        }
+        float distance = currentLocation.distanceTo(geocacheLocation);
+        float deviceBearing = currentLocation.getBearing();
+        float azimuth = currentLocation.bearingTo(geocacheLocation);
+        if(azimuth < 0) azimuth = 360 + azimuth;
+        if(deviceBearing < 0) deviceBearing = 360 + deviceBearing;
+
+        float bearing = azimuth - deviceBearing;
+        if(bearing < 0) bearing = 360 + bearing;
+
+        updateWatchWithLocation(distance, bearing, azimuth);
+
     }
-    
+
     public void startWatchApp() {
         PebbleKit.startAppOnPebble(getApplicationContext(), uuid);
     }
@@ -175,57 +173,89 @@ public class WatchService extends Service {
     public void stopWatchApp() {
         PebbleKit.closeAppOnPebble(getApplicationContext(), uuid);
     }
-    
-    
-	public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
-    	int bearingInt = Math.round(bearing);
-    	int azimuthInt = Math.round(azimuth);
-    	
-    	// convert bearing in degrees to index of image to show. north +- 15 degrees is index 0,
-    	// bearing of 30 degrees +- 15 degrees is index 1, etc..
-    	int bearingIndex = ((bearingInt + 15)/30) % 12;
 
-		String distString = "";
-		int distanceFt = (int) Math.round(distance*3.28084);
-		int distanceYd = (int) Math.round(distance*1.09361);
-		int distanceM = Math.round(distance);
-		ArrayList<String> measurements = new ArrayList<>();
+    public void updateWatchWithLocation(float distance, float bearing, float azimuth) {
 
-		if(distanceFt > ftCutoff && changeUnits) {
-			measurements.add(String.format(locale, "%.2f mi", distanceFt / (float)5280));
-		}else{
-			measurements.add(String.format(locale, "%d ft", distanceFt));
-		}
+        int bearingInt = Math.round(bearing);
+        int azimuthInt = Math.round(azimuth);
 
-		if(distanceYd > ydCutoff && changeUnits) {
-			measurements.add(String.format(locale, "%.2f mi", distanceYd / (float)1760));
-		}else{
-			measurements.add(String.format(locale, "%d yd", distanceYd));
-		}
+        // convert bearing in degrees to index of image to show. north +- 15 degrees is index 0,
+        // bearing of 30 degrees +- 15 degrees is index 1, etc..
+        int bearingIndex = ((bearingInt + 15)/30) % 12;
 
-		if(distanceM > mCutoff && changeUnits) {
-			measurements.add(String.format(locale, "%.2f km", distanceM / (float)1000));
-		}else{
-			measurements.add(String.format(locale, "%d m", distanceM));
-		}
+        String distString = "";
+        double distanceFt = distance*3.28084;
+        double distanceYd = distance*1.09361;
+        int distanceM = Math.round(distance);
+        ArrayList<String> measurements = new ArrayList<>();
 
-		distString = TextUtils.join(DELIMITER, measurements);
+        if(distanceFt > ftCutoff && changeUnits) {
+            double distanceMi = distanceFt / (float)5280;
+            String toShow = !doFractions ? String.format(locale, "%.2f", distanceMi) : toFraction(distanceMi);
+            measurements.add(String.format(locale, "%s mi", toShow));
+        }else{
+            String toShow = !doFractions ? String.format(locale, "%.2f", distanceFt) : toFraction(distanceFt);
+            measurements.add(String.format(locale, "%s ft", toShow));
+        }
+
+        if(distanceYd > ydCutoff && changeUnits) {
+            double distanceMi = distanceYd / (float)1760;
+            String toShow = !doFractions ? String.format(locale, "%.2f", distanceMi) : toFraction(distanceMi);
+            measurements.add(String.format(locale, "%s mi", toShow));
+        }else{
+            String toShow = !doFractions ? String.format(locale, "%.2f", distanceYd) : toFraction(distanceYd);
+            measurements.add(String.format(locale, "%s yd", toShow));
+        }
+
+        if(distanceM > mCutoff && changeUnits) {
+            measurements.add(String.format(locale, "%.2f km", distanceM / (float)1000));
+        }else{
+            measurements.add(String.format(locale, "%d m", distanceM));
+        }
+
+        distString = TextUtils.join(DELIMITER, measurements);
 
         Log.i("Distance", String.format(locale,"%d m", distanceM));
         Log.i("Bearing", String.valueOf(bearingIndex));
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
-    	    	
-    	sendToPebble(distString, bearingIndex, azimuthInt, Math.round(declination) );
-    	
+
+        Log.d("sendToPebble", distString);
+
+        sendToPebble(distString, bearingIndex, azimuthInt, Math.round(declination) );
+
     }
-    
+
+    String toFraction(double d) {
+        int factor = 10;
+        StringBuilder sb = new StringBuilder();
+        if (d < 0) {
+            sb.append('-');
+            d = -d;
+        }
+        long l = (long) d;
+        if (l != 0) sb.append(l);
+        d -= l;
+        double error = Math.abs(d);
+        int bestDenominator = 1;
+        for(int i=2;i<=factor;i++) {
+            double error2 = Math.abs(d - (double) Math.round(d * i) / i);
+            if (error2 < error) {
+                error = error2;
+                bestDenominator = i;
+            }
+        }
+        if (bestDenominator > 1)
+            sb.append(' ').append(Math.round(d * bestDenominator)).append('/') .append(bestDenominator);
+        return sb.toString();
+    }
+
     public void sendToPebble(String distance, int bearingIndex, int azimuth, int decl) {
-    	
-    	boolean hasExtras = checkHasExtras();
-    	
-    	PebbleDictionary data = new PebbleDictionary();
+
+        boolean hasExtras = checkHasExtras();
+
+        PebbleDictionary data = new PebbleDictionary();
 
         data.addString(DISTANCE_KEY, distance);
         data.addUint8(BEARING_INDEX_KEY, (byte)bearingIndex);
@@ -234,38 +264,38 @@ public class WatchService extends Service {
         data.addUint8(EXTRAS_KEY, (byte)(hasExtras?1:0) );
 
         if(hasExtras){
-        	
-        	data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
-        			((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
-        	
-        	data.addString(GC_NAME_KEY, (gc_name.length() > 20) ? gc_name.substring(0, 20) : gc_name);
-        	data.addString(GC_CODE_KEY, gc_code);
-        	data.addString(GC_SIZE_KEY, gc_size);
-        	
+
+            data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
+                    ((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
+
+            data.addString(GC_NAME_KEY, (gc_name.length() > 20) ? gc_name.substring(0, 20) : gc_name);
+            data.addString(GC_CODE_KEY, gc_code);
+            data.addString(GC_SIZE_KEY, gc_size);
+
         }
-        
+
         PebbleKit.sendDataToPebble(getApplicationContext(), uuid, data);
-        
+
     }
-    
+
     private boolean checkHasExtras() {
 
-    	// function that makes sure that extras exists.
-    	// Not really smart way, but works
+        // function that makes sure that extras exists.
+        // Not really smart way, but works
         return gc_name != null && gc_code != null && gc_size != null;
-    	
-	}
 
-	private void showNotification() {
-    	
+    }
+
+    private void showNotification() {
+
         Intent notificationIntent = new Intent("android.intent.CLOSE_ACTIVITY");
         PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, 0);
 
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext())
-    		    .setSmallIcon(R.drawable.ic_launcher)
-    		    .setContentTitle(getText(R.string.app_name))
-    		    .setContentText(getText(R.string.service_started))
-    		    .setContentIntent(intent);
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(getText(R.string.app_name))
+                .setContentText(getText(R.string.service_started))
+                .setContentIntent(intent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String NOTIFICATION_CHANNEL_ID = "com.webmajstr.pebble_gc";
@@ -277,8 +307,6 @@ public class WatchService extends Service {
             assert manager != null;
             manager.createNotificationChannel(chan);
 
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-
             notBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
             notBuilder
                     .setPriority(NotificationManager.IMPORTANCE_MIN)
@@ -288,51 +316,50 @@ public class WatchService extends Service {
         Notification notification = notBuilder.build();
         startForeground(R.string.service_started, notification);
 
-    } 
-    
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-    	
-    	double gc_latitude = intent.getDoubleExtra("latitude", 0.0);
-    	double gc_longitude = intent.getDoubleExtra("longitude", 0.0);
 
-    	Log.i("Lon & Lat of Target", gc_longitude + " " + gc_latitude);
-    	
-    	gc_difficulty = intent.getFloatExtra("difficulty", 0);
-		gc_terrain = intent.getFloatExtra("terrain", 0);
-		gc_name = intent.getStringExtra("name");
-		gc_code = intent.getStringExtra("code");
-		gc_size = intent.getStringExtra("size");
-		
+        double gc_latitude = intent.getDoubleExtra("latitude", 0.0);
+        double gc_longitude = intent.getDoubleExtra("longitude", 0.0);
+
+        Log.i("Lon & Lat of Target", gc_longitude + " " + gc_latitude);
+
+        gc_difficulty = intent.getFloatExtra("difficulty", 0);
+        gc_terrain = intent.getFloatExtra("terrain", 0);
+        gc_name = intent.getStringExtra("name");
+        gc_code = intent.getStringExtra("code");
+        gc_size = intent.getStringExtra("size");
+
         geocacheLocation.setLatitude( gc_latitude );
         geocacheLocation.setLongitude( gc_longitude );
 
         //reset watch to default state
-        //TODO do make sure the watchapp is listening to messages
-    	sendToPebble("GPS Lost", 0, 0, 0);
-    	
-    	Toast.makeText(this, R.string.navigation_has_started, Toast.LENGTH_LONG).show();
-                
+        sendToPebble("GPS Lost", 0, 0, 0);
+
+        Toast.makeText(this, R.string.navigation_has_started, Toast.LENGTH_LONG).show();
+
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
         return START_STICKY;
     }
-    
+
     @Override
     public void onDestroy() {
-    	
-    	stopWatchApp();
-    	
-    	unregisterReceiver(mReceiver);
-    	
-    	// stop listening for GPS updates
-		locationManager.removeUpdates(locationListener);
-		  
-		// stop foreground
-		stopForeground(true);
 
-		super.onDestroy();
+        stopWatchApp();
+
+        unregisterReceiver(mReceiver);
+
+        // stop listening for GPS updates
+        locationManager.removeUpdates(locationListener);
+
+        // stop foreground
+        stopForeground(true);
+
+        super.onDestroy();
     }
-    
-    
+
+
 }

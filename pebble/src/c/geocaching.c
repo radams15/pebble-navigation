@@ -5,13 +5,13 @@
 
 #define unitAmount 3 // the amount of units passed to the watch
 
-/*#ifdef PBL_COLOR
-  #define bg GColorRed
-  #define fg GColorBlack
-#else*/
+#ifdef PBL_COLOR
+  #define bg GColorDukeBlue
+  #define fg GColorWhite
+#else
   #define fg GColorWhite
   #define bg GColorBlack
-//#endif
+#endif
 
 // ADDED GPath point definitions for arrow and north marker
 static const GPathInfo ARROW_POINTS =
@@ -89,7 +89,7 @@ char disp_buf[32];
 
 const char* DELIMITER = ","; // Unit delimiter from phone app.
 
-int unitMode = 2; // 0 -> feet, 1 -> yard, 2 -> metres
+int unitMode = 1; // 0 -> feet/mile, 1 -> yard/mile, 2 -> metre/kilometre
 
 char *strtok(char* s, const char *delim)
 {
@@ -136,7 +136,6 @@ cont:
 			}
 		} while (sc != 0);
 	}
-	/* NOTREACHED */
 }
 
 static void sync_tuple_changed_callback(const uint32_t key,
@@ -147,12 +146,12 @@ static void sync_tuple_changed_callback(const uint32_t key,
   switch (key) {
 
     case DISTANCE_KEY:
-      printf("\n"); // just as ou can't put assignment after the case statement for some reason
+      printf("\n"); // just as you can't put assignment after the case statement for some reason
       // I've ruined this good code with a terrible, terrible hack that stops me needing to send a button press back to the phone. I'm sorry.
       char distances[unitAmount][16]; // 3 measurements, with 16 bytes of data in each
       const char* distanceData = new_tuple->value->cstring;
 
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data: %s", distanceData);
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data: %s", distanceData);
 
       if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
         snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
@@ -173,7 +172,7 @@ static void sync_tuple_changed_callback(const uint32_t key,
             pt = strtok (NULL, DELIMITER); // get next token
             x++;
 
-            APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance: %s", distances[2]);
+            //APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance: %s", distances[2]);
         }
 
         snprintf(disp_buf, sizeof(disp_buf), "%s", distances[unitMode]);
