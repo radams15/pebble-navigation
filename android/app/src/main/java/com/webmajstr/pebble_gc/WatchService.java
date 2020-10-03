@@ -1,6 +1,5 @@
 package com.webmajstr.pebble_gc;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -26,7 +25,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -34,15 +32,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 public class WatchService extends Service {
-    int mCutoff = 1000; // when to turn m to km
-    int ftCutoff = 5280; // when to turn ft to mi
-    int ydCutoff = 1760; // when to turn yd to mi
-
-    boolean changeUnits = true; // if to change units such as m -> km, ft -> mi
-    boolean doFractions = true; // turn imperial decimals into rough fractions;
-
-    final String DELIMITER = ","; // watch string split delimiter
-
     LocationManager locationManager;
     LocationListener locationListener;
 
@@ -52,6 +41,7 @@ public class WatchService extends Service {
 
     float gc_difficulty, gc_terrain;
     String gc_name, gc_code, gc_size;
+    Units units = Units.METRIC;
 
     float declination = 1000;
 
@@ -64,6 +54,7 @@ public class WatchService extends Service {
     private static final int GC_SIZE_KEY = 6;
     private static final int AZIMUTH_KEY = 7;
     private static final int DECLINATION_KEY = 8;
+    private static final int UNITS_KEY = 9;
 
     private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
 
@@ -144,6 +135,8 @@ public class WatchService extends Service {
 
     void locationUpdate(Location currentLocation){
 
+        System.out.println(currentLocation.toString());
+
         if(!currentLocation.getProvider().equals("gps")) return;
 
         // calculate declination at this point. This is done only once as it shouldn't change so much at similar location on earth ;)
@@ -184,87 +177,34 @@ public class WatchService extends Service {
         // bearing of 30 degrees +- 15 degrees is index 1, etc..
         int bearingIndex = ((bearingInt + 15)/30) % 12;
 
-        String distString = "";
-        double distanceFt = distance*3.28084;
-        double distanceYd = distance*1.09361;
-        int distanceM = Math.round(distance);
-        ArrayList<String> measurements = new ArrayList<>();
-
-        if(distanceFt > ftCutoff && changeUnits) {
-            double distanceMi = distanceFt / (float)5280;
-            String toShow = !doFractions ? String.format(locale, "%.2f", distanceMi) : toFraction(distanceMi);
-            measurements.add(String.format(locale, "%s mi", toShow));
-        }else{
-            String toShow = !doFractions ? String.format(locale, "%.2f", distanceFt) : toFraction(distanceFt);
-            measurements.add(String.format(locale, "%s ft", toShow));
-        }
-
-        if(distanceYd > ydCutoff && changeUnits) {
-            double distanceMi = distanceYd / (float)1760;
-            String toShow = !doFractions ? String.format(locale, "%.2f", distanceMi) : toFraction(distanceMi);
-            measurements.add(String.format(locale, "%s mi", toShow));
-        }else{
-            String toShow = !doFractions ? String.format(locale, "%.2f", distanceYd) : toFraction(distanceYd);
-            measurements.add(String.format(locale, "%s yd", toShow));
-        }
-
-        if(distanceM > mCutoff && changeUnits) {
-            measurements.add(String.format(locale, "%.2f km", distanceM / (float)1000));
-        }else{
-            measurements.add(String.format(locale, "%d m", distanceM));
-        }
-
-        distString = TextUtils.join(DELIMITER, measurements);
-
-        Log.i("Distance", String.format(locale,"%d m", distanceM));
         Log.i("Bearing", String.valueOf(bearingIndex));
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
 
-        Log.d("sendToPebble", distString);
-
-        sendToPebble(distString, bearingIndex, azimuthInt, Math.round(declination) );
+        sendToPebble(distance, bearingIndex, azimuthInt, Math.round(declination), units);
 
     }
 
-    String toFraction(double d) {
-        int factor = 10;
-        StringBuilder sb = new StringBuilder();
-        if (d < 0) {
-            sb.append('-');
-            d = -d;
-        }
-        long l = (long) d;
-        if (l != 0) sb.append(l);
-        d -= l;
-        double error = Math.abs(d);
-        int bestDenominator = 1;
-        for(int i=2;i<=factor;i++) {
-            double error2 = Math.abs(d - (double) Math.round(d * i) / i);
-            if (error2 < error) {
-                error = error2;
-                bestDenominator = i;
-            }
-        }
-        if (bestDenominator > 1)
-            sb.append(' ').append(Math.round(d * bestDenominator)).append('/') .append(bestDenominator);
-        return sb.toString();
-    }
-
-    public void sendToPebble(String distance, int bearingIndex, int azimuth, int decl) {
+    public void sendToPebble(double distance, int bearingIndex, int azimuth, int decl, Units unitsToSend) {
 
         boolean hasExtras = checkHasExtras();
 
         PebbleDictionary data = new PebbleDictionary();
 
-        data.addString(DISTANCE_KEY, distance);
-        data.addUint8(BEARING_INDEX_KEY, (byte)bearingIndex);
+        if(unitsToSend == null){
+            unitsToSend = Units.METRIC;
+        }
+
+        int unitsSend = UnitOps.convert(unitsToSend);
+
+        data.addInt32(DISTANCE_KEY, (int) (distance*1000));
+        data.addUint8(BEARING_INDEX_KEY, (byte) bearingIndex);
         data.addUint16(AZIMUTH_KEY, (short) azimuth);
         data.addInt16(DECLINATION_KEY, (short) decl);
-        data.addUint8(EXTRAS_KEY, (byte)(hasExtras?1:0) );
+        data.addUint8(EXTRAS_KEY, (byte) (hasExtras?1:0) );
+        data.addUint8(UNITS_KEY, (byte) unitsSend);
 
         if(hasExtras){
-
             data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
                     ((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
 
@@ -332,11 +272,13 @@ public class WatchService extends Service {
         gc_code = intent.getStringExtra("code");
         gc_size = intent.getStringExtra("size");
 
+        units = (Units) intent.getSerializableExtra("units");
+
         geocacheLocation.setLatitude( gc_latitude );
         geocacheLocation.setLongitude( gc_longitude );
 
         //reset watch to default state
-        sendToPebble("GPS Lost", 0, 0, 0);
+        sendToPebble(0, 0, 0, 0, units);
 
         Toast.makeText(this, R.string.navigation_has_started, Toast.LENGTH_LONG).show();
 

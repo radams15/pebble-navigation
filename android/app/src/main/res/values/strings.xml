@@ -8,9 +8,18 @@
     
 
     <string name="service_started">Click here to stop the app!</string>
+
+    <string name="preference_file_key">sharedPrefsPebbleNav</string>
     
 
     <string name="navigation_has_started">Pebble Navigation has started!</string>
     
     <string name="error_message">Error: Something went wrong!</string>
+
+    <string-array name="Units">
+        <item>Imperial</item>
+        <item>Metric</item>
+        <item>Mixed</item>
+    </string-array>
+
 </resources>

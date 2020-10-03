@@ -1,9 +1,17 @@
 #include "pebble.h"
 #include <string.h>
+#include <math.h>
 
-// to the original owner - i'm not the best C programmer, so some of the stuff is directly from stackoverflow, and my own twisted understanding of pointers, etc.
+#define IMPERIAL 0 // foot/mile
+#define METRIC 1 // metre/kilometre
+#define MIXED 2 // metre/mile
 
-#define unitAmount 3 // the amount of units passed to the watch
+#define METRE_PER_KILOMETRE 1000.0f // when to turn m to km
+#define FEET_PER_MILE 5280.0f // when to turn ft to mi
+
+#define FEET_PER_METRE 3.281
+
+#define CHANGE_UNITS 1 // if to change units such as m -> km, ft -> mi
 
 #ifdef PBL_COLOR
   #define bg GColorDukeBlue
@@ -55,6 +63,7 @@ enum GeoKey {
   GC_SIZE_KEY = 0x6,
   AZIMUTH_KEY = 0x7,
   DECLINATION_KEY = 0x8,
+  UNITS_KEY = 0x9
 };
 
 Window *window;
@@ -73,6 +82,9 @@ uint8_t status;
 bool rot_arrow = false;
 bool gotdecl = false;
 int16_t declination = 0;
+int16_t units = METRIC;
+
+double distance = 0;
 
 TextLayer *text_distance_layer;
 TextLayer *text_time_layer;
@@ -87,101 +99,67 @@ void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed);
 
 char disp_buf[32];
 
-const char* DELIMITER = ","; // Unit delimiter from phone app.
-
-int unitMode = 1; // 0 -> feet/mile, 1 -> yard/mile, 2 -> metre/kilometre
-
-char *strtok(char* s, const char *delim)
-{
-	char *spanp;
-	int c, sc;
-	char *tok;
-	static char *last;
-
-
-	if (s == NULL && (s = last) == NULL)
-		return (NULL);
-
-	/*
-	 * Skip (span) leading delimiters (s += strspn(s, delim), sort of).
-	 */
-cont:
-	c = *s++;
-	for (spanp = (char *)delim; (sc = *spanp++) != 0;) {
-		if (c == sc)
-			goto cont;
-	}
-
-	if (c == 0) {		/* no non-delimiter characters */
-		last = NULL;
-		return (NULL);
-	}
-	tok = s - 1;
-
-	/*
-	 * Scan token (scan for delimiters: s += strcspn(s, delim), sort of).
-	 * Note that delim must have one NUL; we stop if we see that, too.
-	 */
-	for (;;) {
-		c = *s++;
-		spanp = (char *)delim;
-		do {
-			if ((sc = *spanp++) == c) {
-				if (c == 0)
-					s = NULL;
-				else
-					s[-1] = 0;
-				last = s;
-				return (tok);
+static void update_display(){    
+	if(distance == -1){
+		snprintf(disp_buf, sizeof(disp_buf), "%s", "No Signal");
+	}else{
+		float display_dist;
+		const char* unit;
+		if(units == IMPERIAL){
+			display_dist = distance * FEET_PER_METRE; // turn to feet
+			
+			if(display_dist >= FEET_PER_MILE && CHANGE_UNITS){
+				display_dist /= FEET_PER_MILE; // turn to mile
+				unit = "mi";
+			}else{
+				unit = "ft";
 			}
-		} while (sc != 0);
+		}else if(units == MIXED){
+			display_dist = distance * FEET_PER_METRE; // turn to feet
+			
+			if(display_dist >= FEET_PER_MILE && CHANGE_UNITS){
+				display_dist /= FEET_PER_MILE; // turn to mile
+				unit = "mi";
+			}else{
+				unit = "m";
+			}
+		}else{ // metric or otherwise
+			display_dist = distance;
+			if(display_dist >= METRE_PER_KILOMETRE && CHANGE_UNITS){
+				display_dist /= METRE_PER_KILOMETRE;
+				unit = "km";
+			}else{
+				unit = "m";
+			}
+		}
+		
+		display_dist = roundf(display_dist*100)/100;
+		
+		snprintf(disp_buf, sizeof(disp_buf), "%d.%d %s", (int)(display_dist), (int)(display_dist*1000)%1000, unit);
+		printf("Display: %s\n", disp_buf);
 	}
+	text_layer_set_text(text_distance_layer, disp_buf);
 }
 
-static void sync_tuple_changed_callback(const uint32_t key,
-                                        const Tuple* new_tuple,
-                                        const Tuple* old_tuple,
-                                        void* context) {
-
+static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tuple, const Tuple* old_tuple, void* context){
   switch (key) {
 
     case DISTANCE_KEY:
-      printf("\n"); // just as you can't put assignment after the case statement for some reason
-      // I've ruined this good code with a terrible, terrible hack that stops me needing to send a button press back to the phone. I'm sorry.
-      char distances[unitAmount][16]; // 3 measurements, with 16 bytes of data in each
+	  printf(" ");
       const char* distanceData = new_tuple->value->cstring;
-
-      //APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance Data: %s", distanceData);
 
       if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
         snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
         APP_LOG(APP_LOG_LEVEL_DEBUG, "No Connection Data Recieved");
       }else{
         APP_LOG(APP_LOG_LEVEL_DEBUG, "Actual Distance Data Recieved");
-        char distanceDataArray[64];
-        strncpy(distanceDataArray, distanceData, 63);
-
-        char *pt;
-        pt = strtok (distanceDataArray, DELIMITER);
-        int x = 0;
-        while (pt != NULL) {
-            strncpy(distances[x], pt, sizeof(distances[x])-1);
-            // strncpy is not adding a \0 at the end of the string after copying it so you need to add it by yourself
-            distances[x][sizeof(distances[x])-1] = '\0';
-
-            pt = strtok (NULL, DELIMITER); // get next token
-            x++;
-
-            //APP_LOG(APP_LOG_LEVEL_DEBUG, "Distance: %s", distances[2]);
-        }
-
-        snprintf(disp_buf, sizeof(disp_buf), "%s", distances[unitMode]);
+        distance = (new_tuple->value->int32)/1000.0f;
+        update_display();
       }
-      text_layer_set_text(text_distance_layer, disp_buf);
+      
       rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "GPS", 3) != 0) ? true : false;
       break;
 
-// NEW
     case AZIMUTH_KEY:
       bearing = new_tuple->value->int16;
       layer_mark_dirty(arrow_layer);
@@ -192,6 +170,11 @@ static void sync_tuple_changed_callback(const uint32_t key,
       gotdecl = true;
       layer_mark_dirty(arrow_layer);
       break;
+      
+	case UNITS_KEY:
+		units = new_tuple->value->uint8;
+		printf("Units: %d\n", units);
+		break;
   }
 }
 
@@ -316,11 +299,11 @@ void down_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Changing Unit Mode From: %d", unitMode);
+  /*APP_LOG(APP_LOG_LEVEL_DEBUG, "Changing Unit Mode From: %d", unitMode);
   unitMode += 1;
   if(unitMode > unitAmount-1){ // if max of the unit array
     unitMode = 0;
-  }
+  }*/
 }
 
 
@@ -421,6 +404,7 @@ void handle_init(void) {
     TupletCString(GC_SIZE_KEY, ""),
     TupletInteger(AZIMUTH_KEY, 0),
     TupletCString(DECLINATION_KEY, "D"),
+    TupletInteger(UNITS_KEY, 0),
   };
 
   const int inbound_size = 150;

@@ -2,6 +2,24 @@ Archive member included because of file (symbol)
 
 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
                               src/c/geocaching.c.25.o (app_event_loop)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+                              src/c/geocaching.c.25.o (__aeabi_f2d)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+                              src/c/geocaching.c.25.o (__aeabi_dmul)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+                              src/c/geocaching.c.25.o (__aeabi_dcmpeq)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+                              src/c/geocaching.c.25.o (__aeabi_d2f)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+                              src/c/geocaching.c.25.o (__aeabi_i2f)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+                              src/c/geocaching.c.25.o (__aeabi_fmul)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+                              src/c/geocaching.c.25.o (__aeabi_fcmpge)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+                              src/c/geocaching.c.25.o (__aeabi_f2iz)
+/home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+                              src/c/geocaching.c.25.o (roundf)
 
 Allocating common symbols
 Common symbol       size              file
@@ -51,10 +69,6 @@ Discarded input sections
                 0x0000000000000000        0x4 aplite/src/resource_ids.auto.c.25.o
  .data.RESOURCE_ID_FONT_ROBOTO_CONDENSED_36
                 0x0000000000000000        0x4 aplite/src/resource_ids.auto.c.25.o
- .text          0x0000000000000000        0x0 src/message_keys.auto.c.25.o
- .bss           0x0000000000000000        0x0 src/message_keys.auto.c.25.o
- .data.MESSAGE_KEY_dummy
-                0x0000000000000000        0x4 src/message_keys.auto.c.25.o
  .bss           0x0000000000000000        0x0 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.accel_data_service_subscribe__deprecated
                 0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
@@ -463,9 +477,9 @@ Discarded input sections
  .text.srand    0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.strcat   0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.strcmp   0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
- .text.strcpy   0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.strlen   0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.strncat  0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+ .text.strncpy  0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.text_layer_legacy2_create
                 0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.text_layer_legacy2_destroy
@@ -1131,6 +1145,14 @@ Discarded input sections
                 0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .text.gdraw_command_frame_get_command_list
                 0x0000000000000000        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
  .text          0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
  .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
  .eh_frame      0x0000000000000000        0x4 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
@@ -1141,6 +1163,8 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
  .init          0x0000000000000000        0x8 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
  .fini          0x0000000000000000        0x8 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
+ .text          0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .bss           0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
 
 Memory Configuration
 
@@ -1155,7 +1179,6 @@ LOAD /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/ar
 LOAD src/c/geocaching.c.25.o
 LOAD aplite/appinfo.auto.c.25.o
 LOAD aplite/src/resource_ids.auto.c.25.o
-LOAD src/message_keys.auto.c.25.o
 LOAD /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a
 START GROUP
 LOAD /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a
@@ -1177,320 +1200,398 @@ LOAD /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/ar
  .note.gnu.build-id
                 0x0000000000000084       0x24 linker stubs
 
-.text           0x00000000000000a8      0xd3d
+.text           0x00000000000000a8     0x1d84
  *(.text)
  .text          0x00000000000000a8       0x14 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+ .text          0x00000000000000bc      0x370 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+                0x00000000000000bc                __aeabi_drsub
+                0x00000000000000c4                __aeabi_dsub
+                0x00000000000000c4                __subdf3
+                0x00000000000000c8                __adddf3
+                0x00000000000000c8                __aeabi_dadd
+                0x0000000000000340                __aeabi_ui2d
+                0x0000000000000340                __floatunsidf
+                0x0000000000000360                __floatsidf
+                0x0000000000000360                __aeabi_i2d
+                0x0000000000000384                __extendsfdf2
+                0x0000000000000384                __aeabi_f2d
+                0x00000000000003c0                __aeabi_ul2d
+                0x00000000000003c0                __floatundidf
+                0x00000000000003d0                __floatdidf
+                0x00000000000003d0                __aeabi_l2d
+ .text          0x000000000000042c      0x424 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+                0x000000000000042c                __aeabi_dmul
+                0x000000000000042c                __muldf3
+                0x0000000000000680                __aeabi_ddiv
+                0x0000000000000680                __divdf3
+ .text          0x0000000000000850      0x110 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+                0x0000000000000850                __gtdf2
+                0x0000000000000850                __gedf2
+                0x0000000000000858                __ltdf2
+                0x0000000000000858                __ledf2
+                0x0000000000000860                __cmpdf2
+                0x0000000000000860                __eqdf2
+                0x0000000000000860                __nedf2
+                0x00000000000008dc                __aeabi_cdrcmple
+                0x00000000000008ec                __aeabi_cdcmple
+                0x00000000000008ec                __aeabi_cdcmpeq
+                0x00000000000008fc                __aeabi_dcmpeq
+                0x0000000000000910                __aeabi_dcmplt
+                0x0000000000000924                __aeabi_dcmple
+                0x0000000000000938                __aeabi_dcmpge
+                0x000000000000094c                __aeabi_dcmpgt
+ .text          0x0000000000000960       0xa0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+                0x0000000000000960                __aeabi_d2f
+                0x0000000000000960                __truncdfsf2
+ .text          0x0000000000000a00      0x21c /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+                0x0000000000000a00                __aeabi_frsub
+                0x0000000000000a08                __subsf3
+                0x0000000000000a08                __aeabi_fsub
+                0x0000000000000a0c                __aeabi_fadd
+                0x0000000000000a0c                __addsf3
+                0x0000000000000b6c                __aeabi_ui2f
+                0x0000000000000b6c                __floatunsisf
+                0x0000000000000b74                __aeabi_i2f
+                0x0000000000000b74                __floatsisf
+                0x0000000000000b90                __floatundisf
+                0x0000000000000b90                __aeabi_ul2f
+                0x0000000000000ba0                __floatdisf
+                0x0000000000000ba0                __aeabi_l2f
+ .text          0x0000000000000c1c      0x2a0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+                0x0000000000000c1c                __mulsf3
+                0x0000000000000c1c                __aeabi_fmul
+                0x0000000000000d84                __divsf3
+                0x0000000000000d84                __aeabi_fdiv
+ .text          0x0000000000000ebc       0xec /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+                0x0000000000000ebc                __gtsf2
+                0x0000000000000ebc                __gesf2
+                0x0000000000000ec4                __lesf2
+                0x0000000000000ec4                __ltsf2
+                0x0000000000000ecc                __nesf2
+                0x0000000000000ecc                __eqsf2
+                0x0000000000000ecc                __cmpsf2
+                0x0000000000000f2c                __aeabi_cfrcmple
+                0x0000000000000f34                __aeabi_cfcmple
+                0x0000000000000f34                __aeabi_cfcmpeq
+                0x0000000000000f44                __aeabi_fcmpeq
+                0x0000000000000f58                __aeabi_fcmplt
+                0x0000000000000f6c                __aeabi_fcmple
+                0x0000000000000f80                __aeabi_fcmpge
+                0x0000000000000f94                __aeabi_fcmpgt
+ .text          0x0000000000000fa8       0x4c /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+                0x0000000000000fa8                __fixsfsi
+                0x0000000000000fa8                __aeabi_f2iz
  *(.text.*)
  .text.select_click_handler
-                0x00000000000000bc       0x38 src/c/geocaching.c.25.o
-                0x00000000000000bc                select_click_handler
+                0x0000000000000ff4        0x2 src/c/geocaching.c.25.o
+                0x0000000000000ff4                select_click_handler
+ *fill*         0x0000000000000ff6        0x2 
  .text.handle_compass
-                0x00000000000000f4       0x84 src/c/geocaching.c.25.o
-                0x00000000000000f4                handle_compass
+                0x0000000000000ff8       0x84 src/c/geocaching.c.25.o
+                0x0000000000000ff8                handle_compass
  .text.config_buttons_provider
-                0x0000000000000178       0x4c src/c/geocaching.c.25.o
-                0x0000000000000178                config_buttons_provider
+                0x000000000000107c       0x4c src/c/geocaching.c.25.o
+                0x000000000000107c                config_buttons_provider
  .text.bluetooth_connection_changed
-                0x00000000000001c4       0x74 src/c/geocaching.c.25.o
-                0x00000000000001c4                bluetooth_connection_changed
+                0x00000000000010c8       0x74 src/c/geocaching.c.25.o
+                0x00000000000010c8                bluetooth_connection_changed
  .text.arrow_layer_update_callback
-                0x0000000000000238       0xec src/c/geocaching.c.25.o
-                0x0000000000000238                arrow_layer_update_callback
+                0x000000000000113c       0xec src/c/geocaching.c.25.o
+                0x000000000000113c                arrow_layer_update_callback
  .text.line_layer_update_callback
-                0x0000000000000324       0x2a src/c/geocaching.c.25.o
-                0x0000000000000324                line_layer_update_callback
- *fill*         0x000000000000034e        0x2 
- .text.handle_minute_tick
-                0x0000000000000350       0x64 src/c/geocaching.c.25.o
-                0x0000000000000350                handle_minute_tick
- .text.strtok   0x00000000000003b4       0x68 src/c/geocaching.c.25.o
-                0x00000000000003b4                strtok
+                0x0000000000001228       0x2a src/c/geocaching.c.25.o
+                0x0000000000001228                line_layer_update_callback
+ *fill*         0x0000000000001252        0x6 
  .text.sync_tuple_changed_callback
-                0x000000000000041c      0x178 src/c/geocaching.c.25.o
+                0x0000000000001258      0x2b0 src/c/geocaching.c.25.o
+ .text.handle_minute_tick
+                0x0000000000001508       0x64 src/c/geocaching.c.25.o
+                0x0000000000001508                handle_minute_tick
  .text.handle_display
-                0x0000000000000594      0x114 src/c/geocaching.c.25.o
-                0x0000000000000594                handle_display
+                0x000000000000156c      0x114 src/c/geocaching.c.25.o
+                0x000000000000156c                handle_display
  .text.down_click_handler
-                0x00000000000006a8       0x24 src/c/geocaching.c.25.o
-                0x00000000000006a8                down_click_handler
+                0x0000000000001680       0x24 src/c/geocaching.c.25.o
+                0x0000000000001680                down_click_handler
  .text.up_click_handler
-                0x00000000000006cc       0x20 src/c/geocaching.c.25.o
-                0x00000000000006cc                up_click_handler
+                0x00000000000016a4       0x20 src/c/geocaching.c.25.o
+                0x00000000000016a4                up_click_handler
  .text.handle_init
-                0x00000000000006ec      0x328 src/c/geocaching.c.25.o
-                0x00000000000006ec                handle_init
+                0x00000000000016c4      0x334 src/c/geocaching.c.25.o
+                0x00000000000016c4                handle_init
  .text.handle_deinit
-                0x0000000000000a14       0x70 src/c/geocaching.c.25.o
-                0x0000000000000a14                handle_deinit
+                0x00000000000019f8       0x70 src/c/geocaching.c.25.o
+                0x00000000000019f8                handle_deinit
  .text.startup.main
-                0x0000000000000a84       0x12 src/c/geocaching.c.25.o
-                0x0000000000000a84                main
- *fill*         0x0000000000000a96        0x2 
+                0x0000000000001a68       0x12 src/c/geocaching.c.25.o
+                0x0000000000001a68                main
+ *fill*         0x0000000000001a7a        0x2 
  .text.app_event_loop
-                0x0000000000000a98        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000a98                app_event_loop
- .text.app_log  0x0000000000000aa4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000aa4                app_log
+                0x0000000000001a7c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001a7c                app_event_loop
+ .text.app_log  0x0000000000001a88        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001a88                app_log
  .text.app_message_open
-                0x0000000000000ab0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ab0                app_message_open
+                0x0000000000001a94        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001a94                app_message_open
  .text.app_sync_get
-                0x0000000000000abc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000abc                app_sync_get
+                0x0000000000001aa0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001aa0                app_sync_get
  .text.app_sync_init
-                0x0000000000000ac8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ac8                app_sync_init
+                0x0000000000001aac        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001aac                app_sync_init
  .text.bluetooth_connection_service_subscribe
-                0x0000000000000ad4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ad4                bluetooth_connection_service_subscribe
+                0x0000000000001ab8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ab8                bluetooth_connection_service_subscribe
  .text.bluetooth_connection_service_unsubscribe
-                0x0000000000000ae0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ae0                bluetooth_connection_service_unsubscribe
+                0x0000000000001ac4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ac4                bluetooth_connection_service_unsubscribe
  .text.clock_is_24h_style
-                0x0000000000000aec        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000aec                clock_is_24h_style
+                0x0000000000001ad0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ad0                clock_is_24h_style
  .text.fonts_load_custom_font
-                0x0000000000000af8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000af8                fonts_load_custom_font
+                0x0000000000001adc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001adc                fonts_load_custom_font
  .text.gpath_create
-                0x0000000000000b04        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b04                gpath_create
+                0x0000000000001ae8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ae8                gpath_create
  .text.gpath_destroy
-                0x0000000000000b10        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b10                gpath_destroy
+                0x0000000000001af4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001af4                gpath_destroy
  .text.gpath_draw_outline
-                0x0000000000000b1c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b1c                gpath_draw_outline
+                0x0000000000001b00        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b00                gpath_draw_outline
  .text.gpath_move_to
-                0x0000000000000b28        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b28                gpath_move_to
+                0x0000000000001b0c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b0c                gpath_move_to
  .text.gpath_rotate_to
-                0x0000000000000b34        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b34                gpath_rotate_to
+                0x0000000000001b18        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b18                gpath_rotate_to
  .text.graphics_fill_rect
-                0x0000000000000b40        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b40                graphics_fill_rect
+                0x0000000000001b24        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b24                graphics_fill_rect
  .text.layer_add_child
-                0x0000000000000b4c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b4c                layer_add_child
+                0x0000000000001b30        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b30                layer_add_child
  .text.layer_create
-                0x0000000000000b58        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b58                layer_create
+                0x0000000000001b3c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b3c                layer_create
  .text.layer_destroy
-                0x0000000000000b64        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b64                layer_destroy
+                0x0000000000001b48        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b48                layer_destroy
  .text.layer_get_bounds
-                0x0000000000000b70        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b70                layer_get_bounds
+                0x0000000000001b54        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b54                layer_get_bounds
  .text.layer_get_frame
-                0x0000000000000b7c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b7c                layer_get_frame
+                0x0000000000001b60        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b60                layer_get_frame
  .text.layer_mark_dirty
-                0x0000000000000b88        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b88                layer_mark_dirty
+                0x0000000000001b6c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b6c                layer_mark_dirty
  .text.layer_set_update_proc
-                0x0000000000000b94        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000b94                layer_set_update_proc
+                0x0000000000001b78        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b78                layer_set_update_proc
  .text.resource_get_handle
-                0x0000000000000ba0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ba0                resource_get_handle
+                0x0000000000001b84        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b84                resource_get_handle
  .text.snprintf
-                0x0000000000000bac        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bac                snprintf
+                0x0000000000001b90        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b90                snprintf
+ .text.strcpy   0x0000000000001b9c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001b9c                strcpy
  .text.strftime
-                0x0000000000000bb8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bb8                strftime
- .text.strncmp  0x0000000000000bc4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bc4                strncmp
- .text.strncpy  0x0000000000000bd0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bd0                strncpy
+                0x0000000000001ba8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ba8                strftime
+ .text.strncmp  0x0000000000001bb4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bb4                strncmp
  .text.tick_timer_service_subscribe
-                0x0000000000000bdc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bdc                tick_timer_service_subscribe
+                0x0000000000001bc0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bc0                tick_timer_service_subscribe
  .text.tick_timer_service_unsubscribe
-                0x0000000000000be8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000be8                tick_timer_service_unsubscribe
+                0x0000000000001bcc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bcc                tick_timer_service_unsubscribe
  .text.window_create
-                0x0000000000000bf4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000bf4                window_create
+                0x0000000000001bd8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bd8                window_create
  .text.window_destroy
-                0x0000000000000c00        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c00                window_destroy
+                0x0000000000001be4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001be4                window_destroy
  .text.window_get_root_layer
-                0x0000000000000c0c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c0c                window_get_root_layer
+                0x0000000000001bf0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bf0                window_get_root_layer
  .text.window_set_click_config_provider
-                0x0000000000000c18        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c18                window_set_click_config_provider
+                0x0000000000001bfc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001bfc                window_set_click_config_provider
  .text.window_stack_push
-                0x0000000000000c24        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c24                window_stack_push
+                0x0000000000001c08        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c08                window_stack_push
  .text.window_single_click_subscribe
-                0x0000000000000c30        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c30                window_single_click_subscribe
+                0x0000000000001c14        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c14                window_single_click_subscribe
  .text.compass_service_set_heading_filter
-                0x0000000000000c3c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c3c                compass_service_set_heading_filter
+                0x0000000000001c20        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c20                compass_service_set_heading_filter
  .text.compass_service_subscribe
-                0x0000000000000c48        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c48                compass_service_subscribe
+                0x0000000000001c2c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c2c                compass_service_subscribe
  .text.compass_service_unsubscribe
-                0x0000000000000c54        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c54                compass_service_unsubscribe
+                0x0000000000001c38        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c38                compass_service_unsubscribe
  .text.gpath_draw_filled
-                0x0000000000000c60        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c60                gpath_draw_filled
+                0x0000000000001c44        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c44                gpath_draw_filled
  .text.graphics_context_set_fill_color
-                0x0000000000000c6c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c6c                graphics_context_set_fill_color
+                0x0000000000001c50        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c50                graphics_context_set_fill_color
  .text.graphics_context_set_stroke_color
-                0x0000000000000c78        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c78                graphics_context_set_stroke_color
+                0x0000000000001c5c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c5c                graphics_context_set_stroke_color
  .text.window_set_background_color
-                0x0000000000000c84        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c84                window_set_background_color
+                0x0000000000001c68        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c68                window_set_background_color
  .text.text_layer_create
-                0x0000000000000c90        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c90                text_layer_create
+                0x0000000000001c74        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c74                text_layer_create
  .text.text_layer_destroy
-                0x0000000000000c9c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000c9c                text_layer_destroy
+                0x0000000000001c80        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c80                text_layer_destroy
  .text.text_layer_get_layer
-                0x0000000000000ca8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ca8                text_layer_get_layer
+                0x0000000000001c8c        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c8c                text_layer_get_layer
  .text.text_layer_get_text
-                0x0000000000000cb4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000cb4                text_layer_get_text
+                0x0000000000001c98        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001c98                text_layer_get_text
  .text.text_layer_set_background_color
-                0x0000000000000cc0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000cc0                text_layer_set_background_color
+                0x0000000000001ca4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001ca4                text_layer_set_background_color
  .text.text_layer_set_font
-                0x0000000000000ccc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ccc                text_layer_set_font
+                0x0000000000001cb0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001cb0                text_layer_set_font
  .text.text_layer_set_text
-                0x0000000000000cd8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000cd8                text_layer_set_text
+                0x0000000000001cbc        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001cbc                text_layer_set_text
  .text.text_layer_set_text_alignment
-                0x0000000000000ce4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000ce4                text_layer_set_text_alignment
+                0x0000000000001cc8        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001cc8                text_layer_set_text_alignment
  .text.text_layer_set_text_color
-                0x0000000000000cf0        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
-                0x0000000000000cf0                text_layer_set_text_color
+                0x0000000000001cd4        0xc /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x0000000000001cd4                text_layer_set_text_color
+ .text.roundf   0x0000000000001ce0       0x50 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+                0x0000000000001ce0                roundf
  *(.rodata)
- .rodata        0x0000000000000cfc       0x30 src/c/geocaching.c.25.o
+ .rodata        0x0000000000001d30       0x30 src/c/geocaching.c.25.o
  *(.rodata*)
  .rodata.str1.1
-                0x0000000000000d2c       0xb9 src/c/geocaching.c.25.o
-                                         0xbe (size before relaxing)
+                0x0000000000001d60       0xcc src/c/geocaching.c.25.o
+                                         0xd6 (size before relaxing)
 
-.glue_7         0x0000000000000de8        0x0
+.glue_7         0x0000000000001e2c        0x0
  .glue_7        0x0000000000000000        0x0 linker stubs
 
-.glue_7t        0x0000000000000de8        0x0
+.glue_7t        0x0000000000001e2c        0x0
  .glue_7t       0x0000000000000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000000de8        0x0
+.vfp11_veneer   0x0000000000001e2c        0x0
  .vfp11_veneer  0x0000000000000000        0x0 linker stubs
 
-.v4_bx          0x0000000000000de8        0x0
+.v4_bx          0x0000000000001e2c        0x0
  .v4_bx         0x0000000000000000        0x0 linker stubs
 
-.iplt           0x0000000000000de8        0x0
+.iplt           0x0000000000001e2c        0x0
  .iplt          0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.rel.dyn        0x0000000000000de8        0x0
+.rel.dyn        0x0000000000001e2c        0x0
  .rel.iplt      0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
  .rel.got       0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.data           0x0000000000000de8       0x70
+.data           0x0000000000001e2c       0x68
  *(.data)
- .data          0x0000000000000de8        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
- .data          0x0000000000000de8        0x4 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
-                0x0000000000000de8                __dso_handle
- .data          0x0000000000000dec        0x0 src/c/geocaching.c.25.o
- .data          0x0000000000000dec        0x0 aplite/appinfo.auto.c.25.o
- .data          0x0000000000000dec        0x0 aplite/src/resource_ids.auto.c.25.o
- .data          0x0000000000000dec        0x0 src/message_keys.auto.c.25.o
- .data          0x0000000000000dec        0x0 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
- .data          0x0000000000000dec        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
- .data          0x0000000000000dec        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
+ .data          0x0000000000001e2c        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
+ .data          0x0000000000001e2c        0x4 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+                0x0000000000001e2c                __dso_handle
+ .data          0x0000000000001e30        0x0 src/c/geocaching.c.25.o
+ .data          0x0000000000001e30        0x0 aplite/appinfo.auto.c.25.o
+ .data          0x0000000000001e30        0x0 aplite/src/resource_ids.auto.c.25.o
+ .data          0x0000000000001e30        0x0 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
+ .data          0x0000000000001e30        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
  *(.data.*)
- .data.unitMode
-                0x0000000000000dec        0x4 src/c/geocaching.c.25.o
-                0x0000000000000dec                unitMode
- .data.time_text.7593
-                0x0000000000000df0        0xd src/c/geocaching.c.25.o
- *fill*         0x0000000000000dfd        0x1 
- .data.__compound_literal.1
-                0x0000000000000dfe        0xc src/c/geocaching.c.25.o
  .data.__compound_literal.0
-                0x0000000000000e0a       0x38 src/c/geocaching.c.25.o
- *fill*         0x0000000000000e42        0x2 
+                0x0000000000001e30       0x38 src/c/geocaching.c.25.o
+ .data.__compound_literal.1
+                0x0000000000001e68        0xc src/c/geocaching.c.25.o
  .data.rel.ro.local.ARROW_POINTS
-                0x0000000000000e44        0x8 src/c/geocaching.c.25.o
- .data.rel.local.DELIMITER
-                0x0000000000000e4c        0x4 src/c/geocaching.c.25.o
-                0x0000000000000e4c                DELIMITER
+                0x0000000000001e74        0x8 src/c/geocaching.c.25.o
+ .data.units    0x0000000000001e7c        0x2 src/c/geocaching.c.25.o
+                0x0000000000001e7c                units
+ .data.time_text.8003
+                0x0000000000001e7e        0xd src/c/geocaching.c.25.o
+ *fill*         0x0000000000001e8b        0x1 
  .data.rel.ro.local.NORTH_POINTS
-                0x0000000000000e50        0x8 src/c/geocaching.c.25.o
+                0x0000000000001e8c        0x8 src/c/geocaching.c.25.o
 
-.igot.plt       0x0000000000000e58        0x0
+.igot.plt       0x0000000000001e94        0x0
  .igot.plt      0x0000000000000000        0x0 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.got            0x0000000000000e58       0x2c
- .got           0x0000000000000e58       0x2c /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+.got            0x0000000000001e94       0x2c
+ .got           0x0000000000001e94       0x2c /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.got.plt        0x0000000000000e84        0xc
- .got.plt       0x0000000000000e84        0xc /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
-                0x0000000000000e84                _GLOBAL_OFFSET_TABLE_
+.got.plt        0x0000000000001ec0        0xc
+ .got.plt       0x0000000000001ec0        0xc /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+                0x0000000000001ec0                _GLOBAL_OFFSET_TABLE_
 
-.bss            0x0000000000000e90      0x114
+.bss            0x0000000000001ed0      0x120
  *(.bss)
  *(.bss.*)
- .bss.bearing   0x0000000000000e90        0x2 src/c/geocaching.c.25.o
-                0x0000000000000e90                bearing
- .bss.data_display
-                0x0000000000000e92        0x1 src/c/geocaching.c.25.o
- .bss.gotdecl   0x0000000000000e93        0x1 src/c/geocaching.c.25.o
-                0x0000000000000e93                gotdecl
+ .bss.bearing   0x0000000000001ed0        0x2 src/c/geocaching.c.25.o
+                0x0000000000001ed0                bearing
+ *fill*         0x0000000000001ed2        0x6 
+ .bss.distance  0x0000000000001ed8        0x8 src/c/geocaching.c.25.o
+                0x0000000000001ed8                distance
+ .bss.gotdecl   0x0000000000001ee0        0x1 src/c/geocaching.c.25.o
+                0x0000000000001ee0                gotdecl
+ *fill*         0x0000000000001ee1        0x1 
  .bss.declination
-                0x0000000000000e94        0x2 src/c/geocaching.c.25.o
-                0x0000000000000e94                declination
+                0x0000000000001ee2        0x2 src/c/geocaching.c.25.o
+                0x0000000000001ee2                declination
  .bss.north_heading
-                0x0000000000000e96        0x2 src/c/geocaching.c.25.o
-                0x0000000000000e96                north_heading
- .bss.sync      0x0000000000000e98       0x20 src/c/geocaching.c.25.o
+                0x0000000000001ee4        0x2 src/c/geocaching.c.25.o
+                0x0000000000001ee4                north_heading
+ *fill*         0x0000000000001ee6        0x2 
+ .bss.sync      0x0000000000001ee8       0x20 src/c/geocaching.c.25.o
  .bss.rot_arrow
-                0x0000000000000eb8        0x1 src/c/geocaching.c.25.o
-                0x0000000000000eb8                rot_arrow
- *fill*         0x0000000000000eb9        0x1 
+                0x0000000000001f08        0x1 src/c/geocaching.c.25.o
+                0x0000000000001f08                rot_arrow
+ *fill*         0x0000000000001f09        0x1 
  .bss.compass_heading
-                0x0000000000000eba        0x2 src/c/geocaching.c.25.o
-                0x0000000000000eba                compass_heading
- .bss.last.7517
-                0x0000000000000ebc        0x4 src/c/geocaching.c.25.o
+                0x0000000000001f0a        0x2 src/c/geocaching.c.25.o
+                0x0000000000001f0a                compass_heading
+ .bss.data_display
+                0x0000000000001f0c        0x1 src/c/geocaching.c.25.o
  .bss.sync_buffer
-                0x0000000000000ec0       0x96 src/c/geocaching.c.25.o
- *fill*         0x0000000000000f56        0x2 
- COMMON         0x0000000000000f58       0x4c src/c/geocaching.c.25.o
-                0x0000000000000f58                text_distance_layer
-                0x0000000000000f5c                arrow_bounds
-                0x0000000000000f64                arrow
-                0x0000000000000f68                disp_buf
-                0x0000000000000f88                arrow_layer
-                0x0000000000000f8c                north
-                0x0000000000000f90                text_time_layer
-                0x0000000000000f94                window
-                0x0000000000000f98                arrow_centre
-                0x0000000000000f9c                status
-                0x0000000000000fa0                line_layer
-
-DISCARD
- libc.a(*)
- libm.a(*)
- libgcc.a(*)
- *(.eh_frame)
-OUTPUT(/mnt/files/scripts/pebble/pebble-navigation/pebble/build/aplite/pebble-app.elf elf32-littlearm)
+                0x0000000000001f0d       0x96 src/c/geocaching.c.25.o
+ *fill*         0x0000000000001fa3        0x1 
+ COMMON         0x0000000000001fa4       0x4c src/c/geocaching.c.25.o
+                0x0000000000001fa4                text_distance_layer
+                0x0000000000001fa8                arrow_bounds
+                0x0000000000001fb0                arrow
+                0x0000000000001fb4                disp_buf
+                0x0000000000001fd4                arrow_layer
+                0x0000000000001fd8                north
+                0x0000000000001fdc                text_time_layer
+                0x0000000000001fe0                window
+                0x0000000000001fe4                arrow_centre
+                0x0000000000001fe8                status
+                0x0000000000001fec                line_layer
 
 .ARM.attributes
                 0x0000000000000000       0x27
@@ -1505,13 +1606,27 @@ OUTPUT(/mnt/files/scripts/pebble/pebble-navigation/pebble/build/aplite/pebble-ap
  .ARM.attributes
                 0x00000000000000a8       0x33 aplite/src/resource_ids.auto.c.25.o
  .ARM.attributes
-                0x00000000000000db       0x33 src/message_keys.auto.c.25.o
+                0x00000000000000db       0x21 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
  .ARM.attributes
-                0x000000000000010e       0x21 /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite/lib/libpebble.a(tmp7jpKUopebble.o)
+                0x00000000000000fc       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x000000000000012f       0x29 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
+                0x0000000000000115       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x0000000000000158       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
+                0x000000000000012e       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .ARM.attributes
+                0x0000000000000147       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .ARM.attributes
+                0x0000000000000160       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .ARM.attributes
+                0x0000000000000179       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .ARM.attributes
+                0x0000000000000192       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .ARM.attributes
+                0x00000000000001ab       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+ .ARM.attributes
+                0x00000000000001c4       0x29 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
+ .ARM.attributes
+                0x00000000000001ed       0x19 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
 
 .comment        0x0000000000000000       0x4e
  .comment       0x0000000000000000       0x4e /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
@@ -1519,52 +1634,106 @@ OUTPUT(/mnt/files/scripts/pebble/pebble-navigation/pebble/build/aplite/pebble-ap
  .comment       0x0000000000000000       0x4f src/c/geocaching.c.25.o
  .comment       0x0000000000000000       0x4f aplite/appinfo.auto.c.25.o
  .comment       0x0000000000000000       0x4f aplite/src/resource_ids.auto.c.25.o
- .comment       0x0000000000000000       0x4f src/message_keys.auto.c.25.o
  .comment       0x0000000000000000       0x4f /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
 
-.debug_info     0x0000000000000000     0x22ec
- .debug_info    0x0000000000000000     0x1e88 src/c/geocaching.c.25.o
- .debug_info    0x0000000000001e88      0x31a aplite/appinfo.auto.c.25.o
- .debug_info    0x00000000000021a2       0xc9 aplite/src/resource_ids.auto.c.25.o
- .debug_info    0x000000000000226b       0x81 src/message_keys.auto.c.25.o
-
-.debug_abbrev   0x0000000000000000      0x580
- .debug_abbrev  0x0000000000000000      0x45a src/c/geocaching.c.25.o
- .debug_abbrev  0x000000000000045a       0x9e aplite/appinfo.auto.c.25.o
- .debug_abbrev  0x00000000000004f8       0x44 aplite/src/resource_ids.auto.c.25.o
- .debug_abbrev  0x000000000000053c       0x44 src/message_keys.auto.c.25.o
-
-.debug_loc      0x0000000000000000      0x8d1
- .debug_loc     0x0000000000000000      0x8d1 src/c/geocaching.c.25.o
-
-.debug_aranges  0x0000000000000000       0xe0
+DISCARD         0x0000000000000000      0x720
+ libc.a(*)
+ libm.a(*)
+ .debug_info    0x0000000000000000      0x156 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .debug_abbrev  0x0000000000000156       0xbb /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .debug_loc     0x0000000000000211      0x182 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
  .debug_aranges
-                0x0000000000000000       0x98 src/c/geocaching.c.25.o
- .debug_aranges
-                0x0000000000000098       0x18 aplite/appinfo.auto.c.25.o
- .debug_aranges
-                0x00000000000000b0       0x18 aplite/src/resource_ids.auto.c.25.o
- .debug_aranges
-                0x00000000000000c8       0x18 src/message_keys.auto.c.25.o
+                0x0000000000000393       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .debug_ranges  0x00000000000003b3       0x10 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .debug_line    0x00000000000003c3      0x14a /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ .debug_str     0x000000000000050d      0x172 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+                                        0x1b2 (size before relaxing)
+ .comment       0x000000000000067f       0x4e /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+                                         0x4f (size before relaxing)
+ .ARM.attributes
+                0x00000000000006cd       0x29 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ *fill*         0x00000000000006f6        0x2 
+ .debug_frame   0x00000000000006f8       0x28 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/../../../../arm-none-eabi/lib/thumb2/libm.a(lib_a-sf_round.o)
+ libgcc.a(*)
+ *(.eh_frame)
+OUTPUT(/mnt/files/scripts/pebble/pebble-navigation/pebble/build/aplite/pebble-app.elf elf32-littlearm)
 
-.debug_ranges   0x0000000000000000       0xa0
- .debug_ranges  0x0000000000000000       0xa0 src/c/geocaching.c.25.o
+.debug_info     0x0000000000000000     0x2811
+ .debug_info    0x0000000000000000     0x1e76 src/c/geocaching.c.25.o
+ .debug_info    0x0000000000001e76      0x31a aplite/appinfo.auto.c.25.o
+ .debug_info    0x0000000000002190       0xc9 aplite/src/resource_ids.auto.c.25.o
+ .debug_info    0x0000000000002259       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .debug_info    0x0000000000002310       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .debug_info    0x00000000000023c7       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .debug_info    0x000000000000247e       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .debug_info    0x0000000000002535       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .debug_info    0x00000000000025ec       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .debug_info    0x00000000000026a3       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .debug_info    0x000000000000275a       0xb7 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
 
-.debug_line     0x0000000000000000      0x6f8
- .debug_line    0x0000000000000000      0x44e src/c/geocaching.c.25.o
- .debug_line    0x000000000000044e      0x11d aplite/appinfo.auto.c.25.o
- .debug_line    0x000000000000056b       0xca aplite/src/resource_ids.auto.c.25.o
- .debug_line    0x0000000000000635       0xc3 src/message_keys.auto.c.25.o
+.debug_abbrev   0x0000000000000000      0x61c
+ .debug_abbrev  0x0000000000000000      0x49a src/c/geocaching.c.25.o
+ .debug_abbrev  0x000000000000049a       0x9e aplite/appinfo.auto.c.25.o
+ .debug_abbrev  0x0000000000000538       0x44 aplite/src/resource_ids.auto.c.25.o
+ .debug_abbrev  0x000000000000057c       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .debug_abbrev  0x0000000000000590       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .debug_abbrev  0x00000000000005a4       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .debug_abbrev  0x00000000000005b8       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .debug_abbrev  0x00000000000005cc       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .debug_abbrev  0x00000000000005e0       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .debug_abbrev  0x00000000000005f4       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .debug_abbrev  0x0000000000000608       0x14 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
 
-.debug_str      0x0000000000000000     0x12e7
- .debug_str     0x0000000000000000      0xfd0 src/c/geocaching.c.25.o
-                                       0x1091 (size before relaxing)
- .debug_str     0x0000000000000fd0      0x22f aplite/appinfo.auto.c.25.o
+.debug_loc      0x0000000000000000      0x752
+ .debug_loc     0x0000000000000000      0x752 src/c/geocaching.c.25.o
+
+.debug_aranges  0x0000000000000000      0x1c0
+ .debug_aranges
+                0x0000000000000000       0x90 src/c/geocaching.c.25.o
+ .debug_aranges
+                0x0000000000000090       0x18 aplite/appinfo.auto.c.25.o
+ .debug_aranges
+                0x00000000000000a8       0x18 aplite/src/resource_ids.auto.c.25.o
+ .debug_aranges
+                0x00000000000000c0       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .debug_aranges
+                0x00000000000000e0       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .debug_aranges
+                0x0000000000000100       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .debug_aranges
+                0x0000000000000120       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .debug_aranges
+                0x0000000000000140       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .debug_aranges
+                0x0000000000000160       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .debug_aranges
+                0x0000000000000180       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .debug_aranges
+                0x00000000000001a0       0x20 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+
+.debug_ranges   0x0000000000000000       0xb0
+ .debug_ranges  0x0000000000000000       0xb0 src/c/geocaching.c.25.o
+
+.debug_line     0x0000000000000000      0xff8
+ .debug_line    0x0000000000000000      0x444 src/c/geocaching.c.25.o
+ .debug_line    0x0000000000000444      0x11d aplite/appinfo.auto.c.25.o
+ .debug_line    0x0000000000000561       0xca aplite/src/resource_ids.auto.c.25.o
+ .debug_line    0x000000000000062b      0x20a /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubdf3.o)
+ .debug_line    0x0000000000000835      0x226 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivdf3.o)
+ .debug_line    0x0000000000000a5b      0x10c /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpdf2.o)
+ .debug_line    0x0000000000000b67       0x9a /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_truncdfsf2.o)
+ .debug_line    0x0000000000000c01      0x128 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_addsubsf3.o)
+ .debug_line    0x0000000000000d29      0x149 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_muldivsf3.o)
+ .debug_line    0x0000000000000e72      0x100 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_cmpsf2.o)
+ .debug_line    0x0000000000000f72       0x86 /home/rhys/pebble-dev/pebble-sdk-4.5-linux64/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a(_arm_fixsfsi.o)
+
+.debug_str      0x0000000000000000     0x12cd
+ .debug_str     0x0000000000000000      0xfe0 src/c/geocaching.c.25.o
+                                       0x10af (size before relaxing)
+ .debug_str     0x0000000000000fe0      0x22f aplite/appinfo.auto.c.25.o
                                         0x327 (size before relaxing)
- .debug_str     0x00000000000011ff       0xbe aplite/src/resource_ids.auto.c.25.o
+ .debug_str     0x000000000000120f       0xbe aplite/src/resource_ids.auto.c.25.o
                                         0x190 (size before relaxing)
- .debug_str     0x00000000000012bd       0x2a src/message_keys.auto.c.25.o
-                                         0xfc (size before relaxing)
 
-.debug_frame    0x0000000000000000      0x1b8
- .debug_frame   0x0000000000000000      0x1b8 src/c/geocaching.c.25.o
+.debug_frame    0x0000000000000000      0x194
+ .debug_frame   0x0000000000000000      0x194 src/c/geocaching.c.25.o

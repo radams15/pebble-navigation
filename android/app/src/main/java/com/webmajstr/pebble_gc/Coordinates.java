@@ -42,24 +42,17 @@ public class Coordinates {
     private Double latitude = 0.;
     private Double longitude = 0.;
 
-    public Coordinates(){
-    }
-
-    public Coordinates(Double lat, Double lon){
-        this.latitude = lat;
-        this.longitude = lon;
-    }
-
-    public void setLatitude(Double latitude){
-        this.latitude = latitude;
-    }
+    final Pattern coordsPattern = Pattern.compile(
+            "([NSEW+-]{1})?\\s?([0-9\\.]{1,})\\s?([0-9\\.]{1,})?\\s?([0-9\\.]{1,})?([NSEW+-]{1})?"
+                    +
+                    "\\s?[\\,\\s]{1}\\s?"
+                    +
+                    "([NSEW+-]{1})?\\s?([0-9\\.]{1,})\\s?([0-9\\.]{1,})?\\s?([0-9\\.]{1,})?([NSEW+-]{1})?",
+            Pattern.CASE_INSENSITIVE
+    );
 
     public Double getLatitude(){
         return this.latitude;
-    }
-
-    public void setLongitude(Double longitude){
-        this.longitude = longitude;
     }
 
     public Double getLongitude(){
@@ -69,18 +62,12 @@ public class Coordinates {
     public Boolean parse(String input){
         String myInput = input;
 
-        myInput = myInput.replaceAll("^\\s+", ""); // trim starting spaces
-        myInput = myInput.replaceAll("\\s+$", ""); // trim ending spaces
+        /*myInput = myInput.replaceAll("^\\s+", ""); // trim starting spaces
+        myInput = myInput.replaceAll("\\s+$", ""); // trim ending spaces*/
+        myInput = myInput.trim();
 
-        Pattern p = Pattern.compile(
-            "([NSEW+-]{1})?\\s?([0-9\\.]{1,})\\s?([0-9\\.]{1,})?\\s?([0-9\\.]{1,})?([NSEW+-]{1})?"
-            +
-            "\\s?[\\,\\s]{1}\\s?"
-            +
-            "([NSEW+-]{1})?\\s?([0-9\\.]{1,})\\s?([0-9\\.]{1,})?\\s?([0-9\\.]{1,})?([NSEW+-]{1})?",
-            Pattern.CASE_INSENSITIVE
-        );
-        Matcher m = p.matcher(myInput);
+
+        Matcher m = coordsPattern.matcher(myInput);
 
         Double latDeg = null;
         Double latMin = null;
@@ -147,8 +134,6 @@ public class Coordinates {
                 return true;
             }
 
-        } else  {
-            // bad input format
         }
 
         return false;
@@ -189,13 +174,9 @@ public class Coordinates {
 
         Double result = _d + _m / 60.0;
 
-        if(
-            dir.equalsIgnoreCase("S")
-            ||
-            dir.equalsIgnoreCase("W")
-            ||
-            dir.equalsIgnoreCase("-")
-        ) result = -result;
+        if(dir.equalsIgnoreCase("S") || dir.equalsIgnoreCase("W") || dir.equalsIgnoreCase("-")){
+            result = -result;
+        }
 
         return result;
     }

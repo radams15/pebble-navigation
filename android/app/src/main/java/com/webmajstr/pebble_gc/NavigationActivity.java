@@ -1,5 +1,7 @@
 package com.webmajstr.pebble_gc;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 import android.app.Activity;
@@ -7,12 +9,15 @@ import android.content.Intent;
 
 import java.util.Objects;
 
+import kotlin.Unit;
+
 public class NavigationActivity extends Activity {
 
     // Variables that I pass on to Service
     double gc_longitude, gc_latitude;
     float gc_difficulty, gc_terrain;
     String gc_name, gc_code, gc_size;
+    Units gc_units = Units.METRIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class NavigationActivity extends Activity {
                 gc_longitude = intent.getDoubleExtra("longitude", 0.0);
                 gc_difficulty = intent.getFloatExtra("difficulty", 0);
                 gc_terrain = intent.getFloatExtra("terrain", 0);
+
                 gc_name = intent.getStringExtra("name");
                 gc_code = intent.getStringExtra("code");
                 gc_size = intent.getStringExtra("size");
@@ -123,6 +129,13 @@ public class NavigationActivity extends Activity {
         intent.putExtra("name", gc_name);
         intent.putExtra("code", gc_code);
         intent.putExtra("size", gc_size);
+
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        gc_units = UnitOps.convert(prefs.getInt("units", UnitOps.convert(Units.METRIC)));
+
+        System.out.println("Using Units: " + gc_units);
+
+        intent.putExtra("units", gc_units == null? Units.METRIC : gc_units);
 
         startService(intent);
     }
