@@ -6,17 +6,13 @@
     ], 
     "displayName": "geocaching", 
     "name": "geocaching", 
-    "messageKeys": {
-        "dummy": 10000
-    }, 
+    "messageKeys": {}, 
     "companyName": "WebMajstr", 
     "enableMultiJS": true, 
-    "versionLabel": "1.0", 
+    "versionLabel": "2.0", 
     "capabilities": [], 
     "sdkVersion": "3", 
-    "appKeys": {
-        "dummy": 10000
-    }, 
+    "appKeys": {}, 
     "longName": "geocaching", 
     "shortName": "geocaching", 
     "watchapp": {
