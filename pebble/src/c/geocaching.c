@@ -71,7 +71,6 @@ Window *window;
 // ADDED GPath definitions
 Layer *arrow_layer;
 GPath *arrow;
-GPath *north;
 GRect arrow_bounds;
 GPoint arrow_centre;
 
@@ -135,7 +134,7 @@ static void update_display(){
 		
 		display_dist = roundf(display_dist*100)/100;
 		
-		snprintf(disp_buf, sizeof(disp_buf), "%d.%d %s", (int)(display_dist), (int)(display_dist*1000)%1000, unit);
+		snprintf(disp_buf, sizeof(disp_buf), "%d.%d%s", (int)(display_dist), (int)(display_dist*10)%10, unit);
 		printf("Display: %s\n", disp_buf);
 	}
 	text_layer_set_text(text_distance_layer, disp_buf);
@@ -214,14 +213,6 @@ void arrow_layer_update_callback(Layer *path, GContext *ctx) {
     gpath_draw_outline(ctx, arrow);
   } else {
     gpath_draw_filled(ctx, arrow);
-  }
-
-// draw outline north arrow if pebble compass is fine calibrating, solid if good
-  gpath_rotate_to(north, north_heading * TRIG_MAX_ANGLE / 360);
-  if (!gotdecl) {
-    gpath_draw_outline(ctx, north);
-  } else {
-    gpath_draw_filled(ctx, north);
   }
 }
 
@@ -391,8 +382,6 @@ void handle_init(void) {
 // Initialize and define the paths
   arrow = gpath_create(&ARROW_POINTS);
   gpath_move_to(arrow, arrow_centre);
-  north = gpath_create(&NORTH_POINTS);
-  gpath_move_to(north, arrow_centre);
 
   Tuplet initial_values[] = {
     TupletCString(DISTANCE_KEY, "NO GPS"),
