@@ -1,0 +1,12 @@
+<resources>
+
+    <!--
+        Base application theme for API 28+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 28+ devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.DayNight">
+        <!-- API 28 theme customizations can go here. -->
+    </style>
+
+</resources>

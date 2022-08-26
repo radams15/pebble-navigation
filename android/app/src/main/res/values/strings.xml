@@ -4,7 +4,7 @@
     <string name="app_name">Pebble Navigation</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_navigation">Pebble Navigation</string>
-    <string name="how_to_use">Hello,\n\nThere is no need to use this app directly.\n\nFor C:Geo: When you want to navigate to geocache, simply select that geocache, click Navigate and select Pebble! \n\nFor the Geocaching official app: Select Radar and pick Pebble Navigator\n\nFor Locus: Select Menu->More->Share and select Pebble Navigator\n\nTo close Pebble Navigation, click on the persistent notification.\n\nYou must have application installed on your Pebble as well. Please read description or view video on Google Play for more info.</string>
+    <string name="how_to_use">Hello,\n\nThere is no need to use this app directly.\n\nFor C:Geo: When you want to navigate to geocache, simply select that geocache, click Navigate and select Pebble! \n\nFor the Geocaching official app: Select Radar and pick Pebble Navigator\n\nFor Locus: Select Menu->More->Share and select Pebble Navigator\n\nTo close Pebble Navigation, click on the notification.\n\nYou must have the application installed on your Pebble as well.</string>
     
 
     <string name="service_started">Click here to stop the app!</string>

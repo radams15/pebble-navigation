@@ -9,8 +9,6 @@ import android.content.Intent;
 
 import java.util.Objects;
 
-import kotlin.Unit;
-
 public class NavigationActivity extends Activity {
 
     // Variables that I pass on to Service

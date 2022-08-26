@@ -1,20 +1,20 @@
-# project  configured on Fri Apr 23 09:17:44 2021 by
-# waf 1.7.11 (abi 98, python 20712f0 on linux2)
-# using /home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/waf configure
+# project  configured on Fri Aug 26 09:06:17 2022 by
+# waf 1.7.11 (abi 98, python 20710f0 on linux2)
+# using /root/.pebble-sdk/SDKs/current/sdk-core/pebble/waf configure
 #
 ----------------------------------------
 Setting top to
-/mnt/files/scripts/pebble/pebble-navigation/pebble
+/pebble
 ----------------------------------------
 Setting out to
-/mnt/files/scripts/pebble/pebble-navigation/pebble/build
+/pebble/build
 ----------------------------------------
 Checking for program webpack
-/home/rhys/.pebble-sdk/SDKs/current/node_modules/.bin/webpack
-find program=['webpack'] paths=['/home/rhys/.pebble-sdk/SDKs/current/node_modules/.bin'] var='WEBPACK' -> '/home/rhys/.pebble-sdk/SDKs/current/node_modules/.bin/webpack'
+/root/.pebble-sdk/SDKs/current/node_modules/.bin/webpack
+find program=['webpack'] paths=['/root/.pebble-sdk/SDKs/current/node_modules/.bin'] var='WEBPACK' -> '/root/.pebble-sdk/SDKs/current/node_modules/.bin/webpack'
 ----------------------------------------
 Found Pebble SDK for chalk in:
-/home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk
+/root/.pebble-sdk/SDKs/current/sdk-core/pebble/chalk
 ----------------------------------------
 Checking for program gcc,cc
 arm-none-eabi-gcc
@@ -25,7 +25,7 @@ arm-none-eabi-ar
 find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
 ----------------------------------------
 Found Pebble SDK for basalt in:
-/home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt
+/root/.pebble-sdk/SDKs/current/sdk-core/pebble/basalt
 ----------------------------------------
 Checking for program gcc,cc
 arm-none-eabi-gcc
@@ -36,7 +36,7 @@ arm-none-eabi-ar
 find program=['ar'] paths='' var='AR' -> 'arm-none-eabi-ar'
 ----------------------------------------
 Found Pebble SDK for aplite in:
-/home/rhys/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite
+/root/.pebble-sdk/SDKs/current/sdk-core/pebble/aplite
 ----------------------------------------
 Checking for program gcc,cc
 arm-none-eabi-gcc

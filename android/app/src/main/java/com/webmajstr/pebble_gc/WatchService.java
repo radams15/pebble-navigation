@@ -229,7 +229,7 @@ public class WatchService extends Service {
     private void showNotification() {
 
         Intent notificationIntent = new Intent("android.intent.CLOSE_ACTIVITY");
-        PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, 0);
+        PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, PendingIntent.FLAG_MUTABLE);
 
         NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.ic_launcher)
