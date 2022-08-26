@@ -7,6 +7,7 @@ import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -56,7 +57,7 @@ public class WatchService extends Service {
     private static final int DECLINATION_KEY = 8;
     private static final int UNITS_KEY = 9;
 
-    private UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
+    private final UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -205,8 +206,11 @@ public class WatchService extends Service {
         data.addUint8(UNITS_KEY, (byte) unitsSend);
 
         if(hasExtras){
-            data.addString(DT_RATING_KEY, "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))+" / T"+
-                    ((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain)) );
+            data.addString(DT_RATING_KEY,
+                    "D"+((gc_difficulty == (int)gc_difficulty) ? String.format(locale, "%d", (int)gc_difficulty) : String.format("%s", gc_difficulty))
+                            +" / T"+
+                            ((gc_terrain == (int)gc_terrain) ? String.format(locale, "%d", (int)gc_terrain) : String.format("%s", gc_terrain))
+            );
 
             data.addString(GC_NAME_KEY, (gc_name.length() > 20) ? gc_name.substring(0, 20) : gc_name);
             data.addString(GC_CODE_KEY, gc_code);
@@ -215,7 +219,6 @@ public class WatchService extends Service {
         }
 
         PebbleKit.sendDataToPebble(getApplicationContext(), uuid, data);
-
     }
 
     private boolean checkHasExtras() {
@@ -226,12 +229,14 @@ public class WatchService extends Service {
 
     }
 
+    @SuppressLint("LaunchActivityFromNotification")
     private void showNotification() {
+        String channelName = "WatchService";
 
         Intent notificationIntent = new Intent("android.intent.CLOSE_ACTIVITY");
-        PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, PendingIntent.FLAG_MUTABLE);
+        PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext())
+        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext(), channelName)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getText(R.string.app_name))
                 .setContentText(getText(R.string.service_started))
@@ -239,7 +244,6 @@ public class WatchService extends Service {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String NOTIFICATION_CHANNEL_ID = "com.webmajstr.pebble_gc";
-            String channelName = "My Background Service";
             NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
             chan.setLightColor(Color.BLUE);
             chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);

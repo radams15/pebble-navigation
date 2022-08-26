@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-package com.webmajstr.pebble_gc;
+package geo.gps;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

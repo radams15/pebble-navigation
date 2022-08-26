@@ -9,6 +9,8 @@ import android.content.Intent;
 
 import java.util.Objects;
 
+import geo.gps.Coordinates;
+
 public class NavigationActivity extends Activity {
 
     // Variables that I pass on to Service
