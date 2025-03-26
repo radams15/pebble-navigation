@@ -103,6 +103,7 @@ static void update_display(){
 		snprintf(disp_buf, sizeof(disp_buf), "%s", "No Signal");
 	}else{
 		float display_dist;
+        int display_as_int = 1;
 		const char* unit;
 		if(units == IMPERIAL){
 			display_dist = distance * FEET_PER_METRE; // turn to feet
@@ -110,6 +111,7 @@ static void update_display(){
 			if(display_dist >= FEET_PER_MILE && CHANGE_UNITS){
 				display_dist /= FEET_PER_MILE; // turn to mile
 				unit = "mi";
+                display_as_int = 0;
 			}else{
 				unit = "ft";
 			}
@@ -119,6 +121,7 @@ static void update_display(){
 			if(display_dist >= FEET_PER_MILE && CHANGE_UNITS){
 				display_dist /= FEET_PER_MILE; // turn to mile
 				unit = "mi";
+                display_as_int = 0;
 			}else{
 				unit = "m";
 			}
@@ -127,14 +130,20 @@ static void update_display(){
 			if(display_dist >= METRE_PER_KILOMETRE && CHANGE_UNITS){
 				display_dist /= METRE_PER_KILOMETRE;
 				unit = "km";
+                display_as_int = 0;
 			}else{
 				unit = "m";
 			}
 		}
 		
-		display_dist = roundf(display_dist*100)/100;
+		display_dist = roundf(display_dist*10)/10;
 		
-		snprintf(disp_buf, sizeof(disp_buf), "%d.%d%s", (int)(display_dist), (int)(display_dist*10)%10, unit);
+        if(display_as_int) {
+            snprintf(disp_buf, sizeof(disp_buf), "%d%s", (int)(display_dist), unit);
+        } else {
+            snprintf(disp_buf, sizeof(disp_buf), "%d.%d%s", (int)(display_dist), (int)(display_dist*10)%10, unit);
+        }
+
 		printf("Display: %s\n", disp_buf);
 	}
 	text_layer_set_text(text_distance_layer, disp_buf);
@@ -143,20 +152,20 @@ static void update_display(){
 static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tuple, const Tuple* old_tuple, void* context){
   switch (key) {
 
-    case DISTANCE_KEY:
-	  printf(" ");
-      const char* distanceData = new_tuple->value->cstring;
+    case DISTANCE_KEY: {
+          const char* distanceData = new_tuple->value->cstring;
 
-      if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
-        snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "No Connection Data Recieved");
-      }else{
-        APP_LOG(APP_LOG_LEVEL_DEBUG, "Actual Distance Data Recieved");
-        distance = (new_tuple->value->int32)/1000.0f;
-        update_display();
+          if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
+            snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
+            APP_LOG(APP_LOG_LEVEL_DEBUG, "No Connection Data Recieved");
+          }else{
+            APP_LOG(APP_LOG_LEVEL_DEBUG, "Actual Distance Data Recieved");
+            distance = (new_tuple->value->int32)/1000.0f;
+            update_display();
+          }
+          
+          rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "GPS", 3) != 0) ? true : false;
       }
-      
-      rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "GPS", 3) != 0) ? true : false;
       break;
 
     case AZIMUTH_KEY:
