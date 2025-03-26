@@ -190,7 +190,18 @@ public class WatchService extends Service {
         Log.i("Declination", String.valueOf(Math.round(declination)));
 
         sendToPebble(distance, bearingIndex, azimuthInt, Math.round(declination), units);
+        sendToBangle(distance, bearingIndex, azimuthInt, Math.round(declination), units);
+    }
 
+    @SuppressLint("DefaultLocale")
+    private void sendToBangle(double distance, int bearingIndex, int azimuth, int decl, Units unitsToSend) {
+        Intent sendIntent = new Intent("com.banglejs.uart.tx");
+        String cmd = String.format("gcNavigateTo(%f, %d, %d, %d, %d)", distance, bearingIndex, azimuth, decl, 0);
+        Log.i("UART.TX", cmd);
+        sendIntent.putExtra("line", cmd);
+        sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        getApplicationContext().sendBroadcast(sendIntent);
     }
 
     public void sendToPebble(double distance, int bearingIndex, int azimuth, int decl, Units unitsToSend) {

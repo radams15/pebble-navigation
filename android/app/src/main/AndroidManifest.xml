@@ -53,9 +53,13 @@
         </activity>
 
         <service android:name=".WatchService"
+            android:exported="true"
             android:foregroundServiceType="location"
-            android:enabled="true"
-            android:exported="true">
+            android:permission="TODO"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.banglejs.uart.tx" />
+            </intent-filter>
         </service>
 
     </application>
