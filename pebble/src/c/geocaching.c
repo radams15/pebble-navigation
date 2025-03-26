@@ -83,7 +83,7 @@ bool gotdecl = false;
 int16_t declination = 0;
 int16_t units = METRIC;
 
-double distance = 0;
+double distance = -1;
 
 TextLayer *text_distance_layer;
 TextLayer *text_time_layer;
@@ -99,9 +99,9 @@ void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed);
 char disp_buf[32];
 
 static void update_display(){    
-	if(distance == -1){
+	if(distance < 1) {
 		snprintf(disp_buf, sizeof(disp_buf), "%s", "No Signal");
-	}else{
+	} else {
 		float display_dist;
         int display_as_int = 1;
 		const char* unit;
@@ -151,20 +151,25 @@ static void update_display(){
 
 static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tuple, const Tuple* old_tuple, void* context){
   switch (key) {
-
     case DISTANCE_KEY: {
           const char* distanceData = new_tuple->value->cstring;
 
           if (strncmp(distanceData, "GPS", 3) == 0){ // if the distance data starts with GPS
             snprintf(disp_buf, sizeof(disp_buf), "%s", distanceData);
             APP_LOG(APP_LOG_LEVEL_DEBUG, "No Connection Data Recieved");
+            rot_arrow = false;
           }else{
             APP_LOG(APP_LOG_LEVEL_DEBUG, "Actual Distance Data Recieved");
+
+            if (new_tuple->value->int32 > 500000000) { // Over 500km away? Probably garbage data
+                break;
+            }
+
             distance = (new_tuple->value->int32)/1000.0f;
+            printf("Got distance: %d\n", (int) new_tuple->value->int32);
             update_display();
+            rot_arrow = true;
           }
-          
-          rot_arrow = (strncmp(text_layer_get_text(text_distance_layer), "GPS", 3) != 0) ? true : false;
       }
       break;
 
@@ -181,7 +186,7 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
       
 	case UNITS_KEY:
 		units = new_tuple->value->uint8;
-		printf("Units: %d\n", units);
+        update_display();
 		break;
   }
 }
@@ -423,6 +428,7 @@ void handle_init(void) {
 
   window_set_click_config_provider(window, config_buttons_provider);
 
+  update_display();
 }
 
 void handle_deinit(void) {
