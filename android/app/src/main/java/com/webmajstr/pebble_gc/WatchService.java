@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.graphics.Color;
 import android.hardware.GeomagneticField;
 import android.location.Location;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 
 public class WatchService extends Service {
     LocationManager locationManager;
@@ -64,13 +66,18 @@ public class WatchService extends Service {
         return null;
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     @Override
     public void onCreate() {
         super.onCreate();
 
         // Listen when notification is clicked to close the service
         IntentFilter filter = new IntentFilter("android.intent.CLOSE_ACTIVITY");
-        registerReceiver(mReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(mReceiver, filter, RECEIVER_EXPORTED);
+        } else {
+            registerReceiver(mReceiver, filter);
+        }
 
         //set to run in foreground, so it's not killed by android
         showNotification();
@@ -236,30 +243,22 @@ public class WatchService extends Service {
         Intent notificationIntent = new Intent("android.intent.CLOSE_ACTIVITY");
         PendingIntent intent = PendingIntent.getBroadcast(this, 0 , notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(getApplicationContext(), channelName)
+        int type = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            type = ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION;
+        }
+
+        Notification notification = new NotificationCompat
+                .Builder(this, channelName)
+                .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(getText(R.string.app_name))
                 .setContentText(getText(R.string.service_started))
-                .setContentIntent(intent);
+                .setContentIntent(intent)
+                .setStyle(new NotificationCompat.BigTextStyle())
+                .build();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String NOTIFICATION_CHANNEL_ID = "com.webmajstr.pebble_gc";
-            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
-            chan.setLightColor(Color.BLUE);
-            chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            assert manager != null;
-            manager.createNotificationChannel(chan);
-
-            notBuilder.setChannelId(NOTIFICATION_CHANNEL_ID);
-            notBuilder
-                    .setPriority(NotificationManager.IMPORTANCE_MIN)
-                    .setCategory(Notification.CATEGORY_SERVICE);
-        }
-
-        Notification notification = notBuilder.build();
-        startForeground(R.string.service_started, notification);
-
+        ServiceCompat.startForeground(this, 2016, notification, type);
     }
 
     @Override

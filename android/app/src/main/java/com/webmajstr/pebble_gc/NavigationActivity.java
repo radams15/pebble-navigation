@@ -137,7 +137,8 @@ public class NavigationActivity extends Activity {
 
         intent.putExtra("units", gc_units == null? Units.METRIC : gc_units);
 
-        startService(intent);
+        Context context = getApplicationContext();
+        context.startForegroundService(intent);
     }
 
 }

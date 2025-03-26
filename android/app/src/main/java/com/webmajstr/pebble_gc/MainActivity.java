@@ -2,6 +2,8 @@ package com.webmajstr.pebble_gc;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -34,13 +36,30 @@ public class MainActivity extends Activity {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 1);
             }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.FOREGROUND_SERVICE}, 1);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+                }
+            }
         }
 
         setContentView(R.layout.activity_main);
 
+        NotificationChannel watchServiceChannel = new NotificationChannel(
+                "WatchService",
+                "Watch Service",
+                NotificationManager.IMPORTANCE_HIGH
+        );
+        watchServiceChannel.setDescription("Watch Service Channel");
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(watchServiceChannel);
+
+
         RadioGroup unitGroup = (RadioGroup) findViewById(R.id.unitGroup);
-
-
         Units chosenUnit = UnitOps.convert(prefs.getInt("units", UnitOps.convert(Units.METRIC)));
         if(chosenUnit == Units.IMPERIAL){
             unitGroup.check(R.id.imperialBtn);
