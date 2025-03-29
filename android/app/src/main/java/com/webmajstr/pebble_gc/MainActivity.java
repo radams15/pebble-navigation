@@ -8,10 +8,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.RadioGroup;
-import androidx.core.app.ActivityCompat;
+
 import androidx.core.content.ContextCompat;
 
 public class MainActivity extends Activity {
@@ -22,19 +22,18 @@ public class MainActivity extends Activity {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
     };
-    final String[] permissionsTwo = new String[]{
+    final String[] locationPermissions2 = new String[]{
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.FOREGROUND_SERVICE_LOCATION,
     };
 
-    final String[] permissionsThree = new String[]{
+    final String[] notificationPermissions = new String[]{
             Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.POST_NOTIFICATIONS,
     };
 
-    private void requestPermissionsWrapper(String[] permissions, int code) {
-        boolean requestPermissions;
-        requestPermissions = false;
+    private void requestPermissionsWrapper(String[] permissions, int code, Button btn) {
+        boolean requestPermissions = false;
 
         for(String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -44,6 +43,21 @@ public class MainActivity extends Activity {
 
         if(requestPermissions)
             requestPermissions(permissions, code);
+
+        checkPermissions(permissions, btn);
+    }
+
+    private void checkPermissions(String[] permissions, Button btn) {
+        boolean requestPermissions = false;
+
+        for(String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions = true;
+            }
+        }
+
+        if(!requestPermissions)
+            btn.setEnabled(false);
     }
 
     @Override
@@ -54,9 +68,18 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        requestPermissionsWrapper(locationPermissions, 1);
-        requestPermissionsWrapper(permissionsTwo, 2);
-        requestPermissionsWrapper(permissionsThree, 3);
+        Button locationBtn = findViewById(R.id.locationBtn);
+        Button locationBtn2 = findViewById(R.id.locationBtn2);
+        Button notificationsBtn = findViewById(R.id.notificationsBtn);
+
+        checkPermissions(locationPermissions, locationBtn);
+        checkPermissions(locationPermissions2, locationBtn2);
+        checkPermissions(notificationPermissions, notificationsBtn);
+
+        locationBtn.setOnClickListener(view -> requestPermissionsWrapper(locationPermissions, 1, locationBtn));
+        locationBtn2.setOnClickListener(view -> requestPermissionsWrapper(locationPermissions2, 2, locationBtn2));
+        notificationsBtn.setOnClickListener(view -> requestPermissionsWrapper(notificationPermissions, 3, notificationsBtn));
+
 
         NotificationChannel watchServiceChannel = new NotificationChannel(
                 "WatchService",

@@ -10,41 +10,41 @@ android:paddingLeft="@dimen/activity_horizontal_margin"
 android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="729dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/titleText"
-            android:layout_width="wrap_content"
+            android:layout_width="354dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="57dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="34sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/how_to_use"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unit:" />
 
         <RadioGroup
             android:id="@+id/unitGroup"
@@ -53,11 +53,7 @@ android:paddingTop="@dimen/activity_vertical_margin" >
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1">
+            android:layout_marginBottom="16dp">
 
             <RadioButton
                 android:id="@+id/metricBtn"
@@ -80,6 +76,39 @@ android:paddingTop="@dimen/activity_vertical_margin" >
                 android:text="@string/mixed_text" />
         </RadioGroup>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Permissions:" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/locationBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location" />
+
+            <Button
+                android:id="@+id/locationBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location 2" />
+
+            <Button
+                android:id="@+id/notificationsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notifications" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 </ScrollView>

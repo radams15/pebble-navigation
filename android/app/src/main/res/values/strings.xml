@@ -4,7 +4,15 @@
     <string name="app_name">Pebble Navigation</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_navigation">Pebble Navigation</string>
-    <string name="how_to_use">For C:Geo: When you want to navigate to geocache, simply select that geocache, click Navigate and select Pebble! \n\nFor the official Geocaching app: Select Radar and pick Pebble Navigator\n\nTo close Pebble Navigation, click on the notification.\n\nYou must have the application installed on your Pebble as well.</string>
+    <string name="how_to_use">Please use the buttons at the botton to request the 3 required permissions, selecting "allow all the time" for the location permission.
+\n\n
+For C:Geo: When you want to navigate to geocache, simply select that geocache, click Navigate and select Pebble!
+\n\n
+For the official Geocaching app: Select Radar and pick Pebble Navigator
+\n\n
+To close Pebble Navigation, click on the notification.
+\n\n
+You must have the application installed on your Pebble as well.</string>
     
 
     <string name="service_started">Click here to stop geocaching!</string>
