@@ -41,42 +41,6 @@ android:paddingTop="@dimen/activity_vertical_margin" >
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unit:" />
-
-        <RadioGroup
-            android:id="@+id/unitGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp">
-
-            <RadioButton
-                android:id="@+id/metricBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/metric_text"
-                app:useMaterialThemeColors="true" />
-
-            <RadioButton
-                android:id="@+id/imperialBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/imperial_text"
-                app:useMaterialThemeColors="true" />
-
-            <RadioButton
-                android:id="@+id/mixedBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/mixed_text" />
-        </RadioGroup>
-
-        <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -17,7 +17,6 @@ public class NavigationActivity extends Activity {
     double gc_longitude, gc_latitude;
     float gc_difficulty, gc_terrain;
     String gc_name, gc_code, gc_size;
-    Units gc_units = Units.METRIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,13 +128,6 @@ public class NavigationActivity extends Activity {
         intent.putExtra("name", gc_name);
         intent.putExtra("code", gc_code);
         intent.putExtra("size", gc_size);
-
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        gc_units = UnitOps.convert(prefs.getInt("units", UnitOps.convert(Units.METRIC)));
-
-        System.out.println("Using Units: " + gc_units);
-
-        intent.putExtra("units", gc_units == null? Units.METRIC : gc_units);
 
         Context context = getApplicationContext();
         context.startForegroundService(intent);

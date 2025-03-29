@@ -90,34 +90,5 @@ public class MainActivity extends Activity {
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.createNotificationChannel(watchServiceChannel);
-
-
-        RadioGroup unitGroup = (RadioGroup) findViewById(R.id.unitGroup);
-        Units chosenUnit = UnitOps.convert(prefs.getInt("units", UnitOps.convert(Units.METRIC)));
-        if(chosenUnit == Units.IMPERIAL){
-            unitGroup.check(R.id.imperialBtn);
-        }else if(chosenUnit == Units.MIXED){
-            unitGroup.check(R.id.mixedBtn);
-        }else{
-            unitGroup.check(R.id.metricBtn);
-        }
-
-        unitGroup.setOnCheckedChangeListener((RadioGroup group, int checkedBtn) -> {
-            if(checkedBtn == R.id.metricBtn){
-                onUnitChange(Units.METRIC);
-            }else if(checkedBtn == R.id.imperialBtn){
-                onUnitChange(Units.IMPERIAL);
-            }else if(checkedBtn == R.id.mixedBtn){
-                onUnitChange(Units.MIXED);
-            }
-        });
-    }
-
-    private void onUnitChange(Units unit){
-        Log.i("Item", String.valueOf(unit));
-
-        SharedPreferences.Editor prefEditor = prefs.edit();
-        prefEditor.putInt("units", UnitOps.convert(unit));
-        prefEditor.apply();
     }
 }

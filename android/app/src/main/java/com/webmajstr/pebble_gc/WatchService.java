@@ -44,7 +44,6 @@ public class WatchService extends Service {
 
     float gc_difficulty, gc_terrain;
     String gc_name, gc_code, gc_size;
-    Units units = Units.METRIC;
 
     float declination = 1000;
 
@@ -57,8 +56,6 @@ public class WatchService extends Service {
     private static final int GC_SIZE_KEY = 6;
     private static final int AZIMUTH_KEY = 7;
     private static final int DECLINATION_KEY = 8;
-    private static final int UNITS_KEY = 9;
-
     private final UUID uuid = UUID.fromString("6191ad65-6cb1-404f-bccc-2446654c20ab"); //v2
 
     @Override
@@ -189,28 +186,20 @@ public class WatchService extends Service {
         Log.i("Azimuth", String.valueOf(azimuthInt));
         Log.i("Declination", String.valueOf(Math.round(declination)));
 
-        sendToPebble(distance, bearingIndex, azimuthInt, Math.round(declination), units);
+        sendToPebble(distance, bearingIndex, azimuthInt, Math.round(declination));
 
     }
 
-    public void sendToPebble(double distance, int bearingIndex, int azimuth, int decl, Units unitsToSend) {
-
+    public void sendToPebble(double distance, int bearingIndex, int azimuth, int decl) {
         boolean hasExtras = checkHasExtras();
 
         PebbleDictionary data = new PebbleDictionary();
-
-        if(unitsToSend == null){
-            unitsToSend = Units.METRIC;
-        }
-
-        int unitsSend = UnitOps.convert(unitsToSend);
 
         data.addInt32(DISTANCE_KEY, (int) (distance*1000));
         data.addUint8(BEARING_INDEX_KEY, (byte) bearingIndex);
         data.addUint16(AZIMUTH_KEY, (short) azimuth);
         data.addInt16(DECLINATION_KEY, (short) decl);
         data.addUint8(EXTRAS_KEY, (byte) (hasExtras?1:0) );
-        data.addUint8(UNITS_KEY, (byte) unitsSend);
 
         if(hasExtras){
             data.addString(DT_RATING_KEY,
@@ -274,14 +263,11 @@ public class WatchService extends Service {
         gc_name = intent.getStringExtra("name");
         gc_code = intent.getStringExtra("code");
         gc_size = intent.getStringExtra("size");
-
-        units = (Units) intent.getSerializableExtra("units");
-
         geocacheLocation.setLatitude( gc_latitude );
         geocacheLocation.setLongitude( gc_longitude );
 
         //reset watch to default state
-        sendToPebble(0, 0, 0, 0, units);
+        sendToPebble(0, 0, 0, 0);
 
         Toast.makeText(this, R.string.navigation_has_started, Toast.LENGTH_LONG).show();
 
