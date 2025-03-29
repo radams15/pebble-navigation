@@ -7,8 +7,8 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.RadioGroup;
 import androidx.core.app.ActivityCompat;
@@ -18,16 +18,21 @@ public class MainActivity extends Activity {
     private SharedPreferences prefs;
 
 
-    final String[] permissions = new String[]{
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+    final String[] locationPermissions = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
+    final String[] permissionsTwo = new String[]{
         Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-        Manifest.permission.FOREGROUND_SERVICE,
         Manifest.permission.FOREGROUND_SERVICE_LOCATION,
-        Manifest.permission.POST_NOTIFICATIONS,
     };
 
-    private void requestPermissions() {
+    final String[] permissionsThree = new String[]{
+            Manifest.permission.FOREGROUND_SERVICE,
+            Manifest.permission.POST_NOTIFICATIONS,
+    };
+
+    private void requestPermissionsWrapper(String[] permissions, int code) {
         boolean requestPermissions;
         requestPermissions = false;
 
@@ -38,8 +43,7 @@ public class MainActivity extends Activity {
         }
 
         if(requestPermissions)
-            ActivityCompat.requestPermissions(this, permissions, 1);
-
+            requestPermissions(permissions, code);
     }
 
     @Override
@@ -50,7 +54,9 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        requestPermissions();
+        requestPermissionsWrapper(locationPermissions, 1);
+        requestPermissionsWrapper(permissionsTwo, 2);
+        requestPermissionsWrapper(permissionsThree, 3);
 
         NotificationChannel watchServiceChannel = new NotificationChannel(
                 "WatchService",
