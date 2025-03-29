@@ -1,4 +1,4 @@
-#include "pebble.h"
+#include <pebble.h>
 #include <string.h>
 #include <math.h>
 
@@ -63,7 +63,6 @@ enum GeoKey {
   GC_SIZE_KEY = 0x6,
   AZIMUTH_KEY = 0x7,
   DECLINATION_KEY = 0x8,
-  UNITS_KEY = 0x9
 };
 
 Window *window;
@@ -183,11 +182,6 @@ static void sync_tuple_changed_callback(const uint32_t key, const Tuple* new_tup
       gotdecl = true;
       layer_mark_dirty(arrow_layer);
       break;
-      
-	case UNITS_KEY:
-		units = new_tuple->value->uint8;
-        update_display();
-		break;
   }
 }
 
@@ -318,7 +312,7 @@ void config_buttons_provider(void *context) {
    window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
    window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
    APP_LOG(APP_LOG_LEVEL_DEBUG, "Button Subscription Complete");
- }
+}
 
 void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
   static char time_text[] = "XXX XX 00:00";
@@ -340,7 +334,18 @@ void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
   }
 }
 
+static void prv_inbox_received_handler(DictionaryIterator *iter, void *context) {
+  Tuple *unit_t = dict_find(iter, 0);
+  if(unit_t) {
+    printf("Got Unit: %d\n", (int) unit_t->value->int32);
+    /* GColor bg_color = GColorFromHEX(bg_color_t->value->int32); */
+  }
+}
+
 void handle_init(void) {
+  /* app_message_register_inbox_received(prv_inbox_received_handler); */
+  /* app_message_open(128, 128); */
+
   window = window_create();
 
   window_set_background_color(window, bg);
@@ -407,16 +412,15 @@ void handle_init(void) {
     TupletCString(GC_SIZE_KEY, ""),
     TupletInteger(AZIMUTH_KEY, 0),
     TupletCString(DECLINATION_KEY, "D"),
-    TupletInteger(UNITS_KEY, 0),
   };
 
   const int inbound_size = 150;
   const int outbound_size = 0;
-  app_message_open(inbound_size, outbound_size);
 
-  app_sync_init(&sync, sync_buffer, sizeof(sync_buffer), initial_values,
-                ARRAY_LENGTH(initial_values), sync_tuple_changed_callback,
-                NULL, NULL);
+  /* app_message_open(inbound_size, outbound_size); */
+  /* app_sync_init(&sync, sync_buffer, sizeof(sync_buffer), initial_values, */
+  /*               ARRAY_LENGTH(initial_values), sync_tuple_changed_callback, */
+  /*               NULL, NULL); */
 
   // Subscribe to notifications
   bluetooth_connection_service_subscribe(bluetooth_connection_changed);

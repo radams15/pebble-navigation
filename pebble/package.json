@@ -2,9 +2,13 @@
   "name": "geocaching",
   "author": "WebMajstr",
   "version": "2.0.0",
-  "keywords": ["pebble-app"],
+  "keywords": [
+    "pebble-app"
+  ],
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "pebble-clay": "^1.0.4"
+  },
   "pebble": {
     "uuid": "6191ad65-6cb1-404f-bccc-2446654c20ab",
     "displayName": "geocaching",
@@ -16,11 +20,23 @@
       "basalt",
       "chalk"
     ],
+    "capabilities": [
+      "configurable"
+    ],
     "watchapp": {
       "watchface": false
     },
     "messageKeys": [
-    	
+      "DISTANCE",
+      "BEARING_INDEX",
+      "EXTRAS",
+      "DT_RATING",
+      "GC_NAME",
+      "GC_CODE",
+      "GC_SIZE",
+      "AZIMUTH",
+      "DECLINATION",
+      "UNIT"
     ],
     "resources": {
       "media": [
